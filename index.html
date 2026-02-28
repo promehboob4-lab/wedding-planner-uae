@@ -1,0 +1,2371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NikahHub – Dubai's Smart Wedding Operating System</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ════════════════════════════════════════
+   DESIGN TOKENS
+════════════════════════════════════════ */
+:root {
+  --gold: #C9952A;
+  --gold-l: #F0CC7A;
+  --rose: #D94F7A;
+  --rose-l: #FFB3CF;
+  --rose-ll: #FFF0F5;
+  --coral: #F06244;
+  --teal: #00A896;
+  --purple: #6D28D9;
+  --sky: #0EA5E9;
+  --green: #059669;
+  --amber: #D97706;
+  --cream: #FFF9F3;
+  --warm: #FFFDF9;
+  --bg2: #FFF5EE;
+  --bg3: #FFF0F5;
+  --bg4: #F0FFFE;
+  --dark: #1C0A2E;
+  --mid: #4A2D6B;
+  --light: #907090;
+  --border: #EDD9C8;
+  --border2: #F5E8F8;
+  --white: #FFFFFF;
+  --shadow: 0 4px 24px rgba(28,10,46,.08);
+  --shadow-lg: 0 16px 60px rgba(28,10,46,.12);
+  --r-sm: 12px;
+  --r-md: 18px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-full: 999px;
+}
+
+/* ════════════════════════════════════════
+   RESET & BASE
+════════════════════════════════════════ */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--warm);color:var(--dark);overflow-x:hidden;line-height:1.6;}
+button,input,select,textarea{font-family:'DM Sans',sans-serif;}
+a{text-decoration:none;color:inherit;}
+img{max-width:100%;}
+
+/* ════════════════════════════════════════
+   SCROLLBAR
+════════════════════════════════════════ */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--cream);}
+::-webkit-scrollbar-thumb{background:linear-gradient(var(--rose),var(--gold));border-radius:99px;}
+
+/* ════════════════════════════════════════
+   TYPOGRAPHY HELPERS
+════════════════════════════════════════ */
+.serif{font-family:'Playfair Display',serif;}
+.italic{font-style:italic;}
+.grad-text{background:linear-gradient(135deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.grad-text-teal{background:linear-gradient(135deg,var(--teal),var(--sky));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* ════════════════════════════════════════
+   LAYOUT HELPERS
+════════════════════════════════════════ */
+.container{max-width:1200px;margin:0 auto;padding:0 5%;}
+.section{padding:80px 5%;}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.flex{display:flex;}
+.flex-center{display:flex;align-items:center;justify-content:center;}
+.flex-between{display:flex;align-items:center;justify-content:space-between;}
+.gap-8{gap:8px;} .gap-12{gap:12px;} .gap-16{gap:16px;} .gap-20{gap:20px;}
+@media(max-width:900px){.grid-3{grid-template-columns:1fr 1fr;}.grid-4{grid-template-columns:1fr 1fr;}}
+@media(max-width:640px){.grid-2,.grid-3,.grid-4{grid-template-columns:1fr;}}
+
+/* ════════════════════════════════════════
+   COMPONENT: BADGE / TAG
+════════════════════════════════════════ */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 14px;border-radius:var(--r-full);font-size:.72rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;}
+.badge-rose{background:rgba(217,79,122,.1);color:var(--rose);border:1px solid rgba(217,79,122,.2);}
+.badge-gold{background:rgba(201,149,42,.1);color:var(--gold);border:1px solid rgba(201,149,42,.2);}
+.badge-teal{background:rgba(0,168,150,.1);color:var(--teal);border:1px solid rgba(0,168,150,.2);}
+.badge-purple{background:rgba(109,40,217,.08);color:var(--purple);border:1px solid rgba(109,40,217,.15);}
+.badge-green{background:rgba(5,150,105,.1);color:var(--green);border:1px solid rgba(5,150,105,.2);}
+.badge-amber{background:rgba(217,119,6,.1);color:var(--amber);border:1px solid rgba(217,119,6,.2);}
+
+/* ════════════════════════════════════════
+   COMPONENT: BUTTONS
+════════════════════════════════════════ */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 26px;border-radius:var(--r-full);font-weight:600;font-size:.9rem;cursor:pointer;border:none;transition:all .25s;white-space:nowrap;}
+.btn-primary{background:linear-gradient(135deg,var(--rose),var(--coral));color:white;box-shadow:0 4px 16px rgba(217,79,122,.3);}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(217,79,122,.4);}
+.btn-secondary{background:white;color:var(--dark);border:1.5px solid var(--border);}
+.btn-secondary:hover{border-color:var(--rose);color:var(--rose);transform:translateY(-2px);}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold-l));color:white;box-shadow:0 4px 16px rgba(201,149,42,.3);}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(201,149,42,.4);}
+.btn-teal{background:linear-gradient(135deg,var(--teal),var(--sky));color:white;box-shadow:0 4px 16px rgba(0,168,150,.3);}
+.btn-teal:hover{transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--mid);border:1.5px solid var(--border2);}
+.btn-ghost:hover{background:var(--rose-ll);color:var(--rose);border-color:var(--rose-l);}
+.btn-sm{padding:8px 18px;font-size:.82rem;}
+.btn-lg{padding:15px 34px;font-size:1rem;}
+
+/* ════════════════════════════════════════
+   COMPONENT: CARD BASE
+════════════════════════════════════════ */
+.card{background:white;border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);transition:all .3s;}
+.card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.card-body{padding:22px;}
+
+/* ════════════════════════════════════════
+   COMPONENT: SECTION HEADER
+════════════════════════════════════════ */
+.sec-head{text-align:center;margin-bottom:48px;}
+.sec-head .pre-tag{display:inline-block;margin-bottom:12px;}
+.sec-head h2{font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:900;margin-bottom:12px;}
+.sec-head p{color:var(--light);font-size:1rem;max-width:520px;margin:0 auto;line-height:1.8;}
+
+/* ════════════════════════════════════════
+   COMPONENT: INPUT / FORM
+════════════════════════════════════════ */
+.form-group{margin-bottom:16px;}
+.form-group label{display:block;font-weight:600;font-size:.87rem;color:var(--mid);margin-bottom:6px;}
+.form-control{width:100%;border:1.5px solid var(--border);border-radius:var(--r-sm);padding:11px 16px;font-size:.9rem;color:var(--dark);outline:none;transition:.2s;background:var(--cream);}
+.form-control:focus{border-color:var(--rose);background:white;box-shadow:0 0 0 3px rgba(217,79,122,.08);}
+select.form-control{cursor:pointer;}
+
+/* ════════════════════════════════════════
+   NAVBAR
+════════════════════════════════════════ */
+#navbar{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(255,253,249,.93);backdrop-filter:blur(24px);
+  border-bottom:1px solid var(--border);
+  height:66px;padding:0 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:all .3s;
+}
+#navbar.scrolled{box-shadow:0 4px 24px rgba(28,10,46,.08);}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;cursor:pointer;}
+.nav-links{display:flex;align-items:center;gap:6px;}
+.nav-links a{padding:7px 14px;border-radius:var(--r-full);font-size:.88rem;font-weight:500;color:var(--mid);transition:.2s;}
+.nav-links a:hover{color:var(--rose);background:var(--rose-ll);}
+.nav-links a.active{color:var(--rose);background:var(--rose-ll);}
+.nav-right{display:flex;align-items:center;gap:10px;}
+.nav-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.9rem;cursor:pointer;}
+.mobile-menu-btn{display:none;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--dark);}
+
+/* ════════════════════════════════════════
+   PAGE ROUTER
+════════════════════════════════════════ */
+.page{display:none;}
+.page.active{display:block;}
+
+/* ════════════════════════════════════════
+   HERO
+════════════════════════════════════════ */
+#hero{
+  min-height:100vh;padding-top:66px;
+  background:
+    radial-gradient(ellipse 60% 50% at 15% 60%,rgba(217,79,122,.1) 0%,transparent 60%),
+    radial-gradient(ellipse 50% 40% at 85% 20%,rgba(201,149,42,.12) 0%,transparent 55%),
+    radial-gradient(ellipse 40% 40% at 60% 85%,rgba(0,168,150,.07) 0%,transparent 50%),
+    var(--cream);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;position:relative;overflow:hidden;
+  padding-left:5%;padding-right:5%;padding-bottom:60px;
+}
+.hero-orb{position:absolute;border-radius:50%;pointer-events:none;}
+.hero-orb-1{width:500px;height:500px;top:-150px;right:-150px;background:radial-gradient(circle,rgba(201,149,42,.12),transparent 70%);animation:orb1 10s ease-in-out infinite;}
+.hero-orb-2{width:400px;height:400px;bottom:-100px;left:-100px;background:radial-gradient(circle,rgba(217,79,122,.1),transparent 70%);animation:orb2 13s ease-in-out infinite;}
+.hero-orb-3{width:300px;height:300px;top:30%;left:5%;background:radial-gradient(circle,rgba(0,168,150,.07),transparent 70%);animation:orb1 8s ease-in-out infinite reverse;}
+@keyframes orb1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-30px,25px) scale(1.05);}}
+@keyframes orb2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(25px,-30px) scale(1.08);}}
+.hero-content{position:relative;z-index:2;max-width:780px;}
+.hero-flag{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(201,149,42,.15),rgba(217,79,122,.08));border:1px solid rgba(201,149,42,.35);color:var(--gold);padding:7px 18px;border-radius:var(--r-full);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:22px;}
+.hero-h1{font-family:'Playfair Display',serif;font-size:clamp(3rem,6.5vw,5.2rem);font-weight:900;line-height:1.08;margin-bottom:18px;}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:1.3rem;color:var(--light);margin-bottom:36px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.8;font-style:italic;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:52px;}
+.hero-stats{display:flex;gap:0;justify-content:center;flex-wrap:wrap;padding-top:32px;border-top:1px solid var(--border);}
+.h-stat{padding:0 32px;text-align:center;border-right:1px solid var(--border);}
+.h-stat:last-child{border-right:none;}
+.h-stat-num{font-family:'Playfair Display',serif;font-size:2.1rem;font-weight:900;}
+.h-stat-lbl{font-size:.78rem;color:var(--light);font-weight:500;margin-top:2px;}
+.floating-card{position:absolute;background:white;border-radius:var(--r-md);padding:12px 16px;box-shadow:0 8px 30px rgba(28,10,46,.12);border:1px solid var(--border);font-size:.82rem;font-weight:600;display:flex;align-items:center;gap:8px;animation:floatCard 4s ease-in-out infinite;}
+@keyframes floatCard{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.fc-1{top:22%;left:4%;animation-delay:0s;}
+.fc-2{top:30%;right:4%;animation-delay:1.5s;}
+.fc-3{bottom:22%;left:6%;animation-delay:3s;}
+@media(max-width:768px){.floating-card{display:none;}.h-stat{padding:0 16px;}.nav-links{display:none;}.mobile-menu-btn{display:block;}}
+
+/* ════════════════════════════════════════
+   AI CHAT
+════════════════════════════════════════ */
+.chat-wrap{max-width:720px;margin:0 auto;background:white;border-radius:var(--r-xl);border:1px solid var(--border);box-shadow:var(--shadow-lg);overflow:hidden;}
+.chat-hd{background:linear-gradient(135deg,var(--rose),var(--coral),var(--gold));padding:20px 24px;display:flex;align-items:center;gap:14px;}
+.chat-ai-ava{width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.25);border:2px solid rgba(255,255,255,.5);display:flex;align-items:center;justify-content:center;font-size:1.4rem;}
+.chat-ai-info h3{color:white;font-weight:700;font-size:.95rem;}
+.chat-ai-info p{color:rgba(255,255,255,.75);font-size:.78rem;margin-top:1px;}
+.chat-status{margin-left:auto;display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.85);font-size:.78rem;}
+.status-pulse{width:8px;height:8px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.3);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 3px rgba(74,222,128,.3);}50%{box-shadow:0 0 0 7px rgba(74,222,128,.08);}}
+.chat-msgs{padding:24px;height:400px;overflow-y:auto;display:flex;flex-direction:column;gap:16px;}
+.msg-row{display:flex;gap:10px;animation:msgSlide .35s ease both;}
+.msg-row.user{flex-direction:row-reverse;}
+@keyframes msgSlide{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.msg-ava{width:36px;height:36px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.msg-row.ai .msg-ava{background:linear-gradient(135deg,var(--rose),var(--coral));}
+.msg-row.user .msg-ava{background:linear-gradient(135deg,var(--teal),var(--sky));}
+.msg-bubble{max-width:82%;padding:12px 16px;border-radius:18px;font-size:.88rem;line-height:1.65;}
+.msg-row.ai .msg-bubble{background:var(--rose-ll);border:1px solid rgba(217,79,122,.12);color:var(--dark);border-radius:4px 18px 18px 18px;}
+.msg-row.user .msg-bubble{background:linear-gradient(135deg,var(--rose),var(--coral));color:white;border-radius:18px 4px 18px 18px;}
+.opts-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+.opt{background:white;border:1.5px solid rgba(217,79,122,.3);color:var(--rose);padding:6px 14px;border-radius:var(--r-full);font-size:.8rem;font-weight:600;cursor:pointer;transition:.2s;}
+.opt:hover,.opt.sel{background:linear-gradient(135deg,var(--rose),var(--coral));color:white;border-color:var(--rose);}
+.chat-typing{display:flex;gap:5px;padding:12px 16px;background:var(--rose-ll);border-radius:4px 18px 18px 18px;width:fit-content;border:1px solid rgba(217,79,122,.12);}
+.typing-dot{width:8px;height:8px;border-radius:50%;background:var(--rose);opacity:.4;animation:typingDot 1.2s infinite;}
+.typing-dot:nth-child(2){animation-delay:.2s;}.typing-dot:nth-child(3){animation-delay:.4s;}
+@keyframes typingDot{0%,60%,100%{opacity:.4;transform:translateY(0);}30%{opacity:1;transform:translateY(-4px);}}
+.chat-input-row{padding:16px 20px;border-top:1px solid var(--border);display:flex;gap:10px;}
+.chat-input{flex:1;border:1.5px solid var(--border);border-radius:var(--r-full);padding:11px 18px;font-size:.88rem;outline:none;transition:.2s;background:var(--cream);}
+.chat-input:focus{border-color:var(--rose);background:white;}
+.chat-send{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--coral));border:none;color:white;font-size:1rem;cursor:pointer;transition:.3s;flex-shrink:0;}
+.chat-send:hover{transform:scale(1.08);}
+
+/* ════════════════════════════════════════
+   VENDOR SECTION
+════════════════════════════════════════ */
+.filter-bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:24px;padding:16px;background:white;border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow);}
+.search-input{flex:1;min-width:180px;border:1.5px solid var(--border);border-radius:var(--r-full);padding:10px 18px;font-size:.88rem;outline:none;transition:.2s;background:var(--cream);}
+.search-input:focus{border-color:var(--rose);background:white;}
+.filter-sel{border:1.5px solid var(--border);border-radius:var(--r-full);padding:9px 16px;font-size:.85rem;color:var(--dark);cursor:pointer;outline:none;transition:.2s;background:white;}
+.filter-sel:focus{border-color:var(--rose);}
+.demand-alert{background:linear-gradient(135deg,rgba(240,98,68,.08),rgba(201,149,42,.08));border:1px solid rgba(240,98,68,.25);border-radius:var(--r-md);padding:13px 18px;margin-bottom:20px;display:flex;align-items:center;gap:10px;font-size:.87rem;}
+.demand-alert strong{color:var(--coral);}
+.vendor-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;}
+.v-card{background:white;border-radius:var(--r-lg);border:1px solid var(--border);overflow:hidden;transition:all .3s;cursor:pointer;}
+.v-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);}
+.v-img{height:170px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;}
+.v-match-badge{position:absolute;top:12px;right:12px;background:linear-gradient(135deg,var(--rose),var(--coral));color:white;font-size:.7rem;font-weight:700;padding:4px 11px;border-radius:var(--r-full);}
+.v-verified{position:absolute;top:12px;left:12px;background:rgba(255,255,255,.95);color:var(--teal);font-size:.7rem;font-weight:700;padding:4px 10px;border-radius:var(--r-full);border:1px solid rgba(0,168,150,.25);display:flex;align-items:center;gap:4px;}
+.v-body{padding:16px;}
+.v-cat{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--rose);margin-bottom:3px;}
+.v-name{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;margin-bottom:8px;}
+.v-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.v-price{font-weight:700;font-size:.88rem;}
+.v-rating{display:flex;align-items:center;gap:4px;font-size:.83rem;color:var(--gold);font-weight:600;}
+.v-tags{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
+.v-tag{background:var(--cream);color:var(--mid);font-size:.7rem;padding:3px 10px;border-radius:var(--r-full);border:1px solid var(--border);font-weight:500;}
+.price-bench{font-size:.75rem;color:var(--teal);font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:4px;}
+.v-book-btn{width:100%;padding:10px;border-radius:var(--r-full);border:none;background:linear-gradient(135deg,var(--rose),var(--coral));color:white;font-weight:600;font-size:.85rem;cursor:pointer;transition:.3s;}
+.v-book-btn:hover{opacity:.9;}
+.cat-pills{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.cat-pill{padding:8px 18px;border-radius:var(--r-full);border:1.5px solid var(--border);background:white;font-size:.83rem;font-weight:600;cursor:pointer;transition:.25s;display:flex;align-items:center;gap:6px;color:var(--mid);}
+.cat-pill:hover,.cat-pill.active{border-color:var(--rose);background:var(--rose-ll);color:var(--rose);}
+
+/* ════════════════════════════════════════
+   CATEGORIES GRID
+════════════════════════════════════════ */
+.cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;}
+.cat-card{background:white;border-radius:var(--r-lg);padding:22px 14px;text-align:center;border:1.5px solid var(--border);transition:.3s;cursor:pointer;}
+.cat-card:hover{border-color:var(--rose);transform:translateY(-4px);box-shadow:var(--shadow);}
+.cat-card:hover .cat-icon-wrap{background:linear-gradient(135deg,var(--rose),var(--coral));}
+.cat-icon-wrap{width:56px;height:56px;border-radius:var(--r-md);background:linear-gradient(135deg,rgba(217,79,122,.1),rgba(201,149,42,.08));margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;transition:.3s;}
+.cat-name{font-weight:700;font-size:.88rem;margin-bottom:3px;}
+.cat-count{font-size:.75rem;color:var(--light);}
+
+/* ════════════════════════════════════════
+   BUDGET TOOL
+════════════════════════════════════════ */
+.budget-tool{background:white;border-radius:var(--r-xl);padding:36px;border:1px solid var(--border);box-shadow:var(--shadow-lg);max-width:800px;margin:0 auto;}
+.budget-header{margin-bottom:24px;}
+.budget-header h3{font-family:'Playfair Display',serif;font-size:1.4rem;font-weight:700;margin-bottom:4px;}
+.budget-header p{color:var(--light);font-size:.87rem;}
+.slider-wrap{margin-bottom:24px;}
+.slider-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+.slider-label span{font-weight:600;font-size:.9rem;}
+.slider-val{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;}
+.range-slider{width:100%;-webkit-appearance:none;height:6px;border-radius:6px;outline:none;cursor:pointer;}
+.range-slider::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--coral));box-shadow:0 3px 10px rgba(217,79,122,.4);cursor:pointer;}
+.budget-grid{display:grid;gap:10px;margin-bottom:20px;}
+.budget-row{display:flex;align-items:center;gap:12px;background:var(--cream);border-radius:var(--r-md);padding:13px 16px;border:1px solid var(--border);}
+.budget-row-icon{font-size:1.3rem;width:36px;text-align:center;}
+.budget-row-info{flex:1;}
+.budget-row-name{font-weight:600;font-size:.87rem;}
+.budget-row-amt{font-size:.8rem;color:var(--light);margin-top:1px;}
+.budget-bar-bg{width:110px;height:7px;background:var(--border);border-radius:7px;overflow:hidden;}
+.budget-bar-fill{height:100%;border-radius:7px;background:linear-gradient(90deg,var(--rose),var(--gold));}
+.budget-pct{font-weight:700;font-size:.9rem;min-width:36px;text-align:right;color:var(--rose);}
+.ai-tip-box{background:linear-gradient(135deg,rgba(217,79,122,.05),rgba(201,149,42,.05));border:1px solid rgba(201,149,42,.25);border-radius:var(--r-md);padding:16px;font-size:.87rem;color:var(--mid);display:flex;gap:10px;align-items:flex-start;line-height:1.7;}
+.optimizer-panel{background:linear-gradient(135deg,rgba(0,168,150,.06),rgba(14,165,233,.04));border:1px solid rgba(0,168,150,.2);border-radius:var(--r-md);padding:16px;margin-top:16px;}
+.optimizer-panel h4{font-weight:700;font-size:.9rem;color:var(--teal);margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+.suggestion-list{display:flex;flex-direction:column;gap:7px;}
+.suggestion-item{display:flex;align-items:center;gap:10px;font-size:.83rem;color:var(--mid);}
+.suggestion-item::before{content:'✓';color:var(--teal);font-weight:900;font-size:.9rem;}
+
+/* ════════════════════════════════════════
+   BOOKING MODAL
+════════════════════════════════════════ */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(28,10,46,.65);z-index:2000;align-items:center;justify-content:center;backdrop-filter:blur(8px);padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal-box{background:white;border-radius:var(--r-xl);padding:36px;max-width:560px;width:100%;position:relative;max-height:90vh;overflow-y:auto;animation:modalPop .35s ease;}
+@keyframes modalPop{from{opacity:0;transform:scale(.94);}to{opacity:1;transform:scale(1);}}
+.modal-close{position:absolute;top:18px;right:22px;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--light);transition:.2s;}
+.modal-close:hover{color:var(--rose);}
+.modal-title{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:900;margin-bottom:4px;}
+.modal-sub{color:var(--light);font-size:.87rem;margin-bottom:24px;}
+.steps-indicator{display:flex;margin-bottom:28px;position:relative;}
+.steps-indicator::before{content:'';position:absolute;top:15px;left:15px;right:15px;height:2px;background:var(--border);z-index:0;}
+.step-dot-wrap{flex:1;text-align:center;position:relative;z-index:1;}
+.step-dot{width:30px;height:30px;border-radius:50%;background:var(--border);color:var(--light);font-weight:700;font-size:.82rem;display:flex;align-items:center;justify-content:center;margin:0 auto 5px;}
+.step-dot-wrap.done .step-dot,.step-dot-wrap.active .step-dot{background:linear-gradient(135deg,var(--rose),var(--coral));color:white;}
+.step-dot-lbl{font-size:.7rem;color:var(--light);font-weight:500;}
+.step-dot-wrap.active .step-dot-lbl{color:var(--rose);font-weight:700;}
+.escrow-notice{background:linear-gradient(135deg,rgba(0,168,150,.07),rgba(14,165,233,.04));border:1px solid rgba(0,168,150,.25);border-radius:var(--r-md);padding:14px;font-size:.85rem;color:var(--mid);display:flex;gap:10px;margin:16px 0;line-height:1.7;}
+.contract-preview{background:var(--cream);border:1px solid var(--border);border-radius:var(--r-md);padding:16px;font-size:.82rem;color:var(--mid);line-height:1.8;margin:14px 0;}
+.contract-preview h5{font-weight:700;font-size:.87rem;color:var(--dark);margin-bottom:8px;}
+.payment-methods{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+.pay-method{flex:1;min-width:100px;border:1.5px solid var(--border);border-radius:var(--r-md);padding:12px;text-align:center;cursor:pointer;transition:.2s;font-size:.82rem;font-weight:600;}
+.pay-method:hover,.pay-method.sel{border-color:var(--rose);background:var(--rose-ll);color:var(--rose);}
+.pay-method .pm-logo{font-size:1.3rem;display:block;margin-bottom:4px;}
+.modal-actions{display:flex;gap:10px;margin-top:20px;}
+
+/* ════════════════════════════════════════
+   DASHBOARD
+════════════════════════════════════════ */
+.dash-wrap{padding:90px 5% 60px;}
+.dash-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;flex-wrap:wrap;gap:16px;}
+.dash-greeting h2{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;margin-bottom:3px;}
+.dash-greeting p{color:var(--light);font-size:.88rem;}
+.dash-tabs{display:flex;gap:4px;background:var(--cream);border-radius:var(--r-full);padding:4px;border:1px solid var(--border);}
+.dash-tab{padding:8px 18px;border-radius:var(--r-full);font-size:.83rem;font-weight:600;cursor:pointer;transition:.25s;color:var(--light);}
+.dash-tab.active{background:linear-gradient(135deg,var(--rose),var(--coral));color:white;box-shadow:0 3px 10px rgba(217,79,122,.3);}
+.dash-tab:hover:not(.active){color:var(--rose);}
+.stat-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;margin-bottom:28px;}
+.stat-card{background:white;border-radius:var(--r-lg);padding:20px;border:1px solid var(--border);transition:.3s;}
+.stat-card:hover{transform:translateY(-3px);box-shadow:var(--shadow);}
+.stat-card-icon{width:44px;height:44px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.3rem;margin-bottom:12px;}
+.stat-card-num{font-family:'Playfair Display',serif;font-size:1.8rem;font-weight:900;}
+.stat-card-lbl{font-size:.78rem;color:var(--light);margin-top:2px;font-weight:500;}
+.stat-card-change{font-size:.75rem;font-weight:600;margin-top:4px;}
+.stat-card-change.up{color:var(--green);}.stat-card-change.down{color:var(--coral);}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px;}
+@media(max-width:768px){.dash-grid{grid-template-columns:1fr;}}
+.dash-widget{background:white;border-radius:var(--r-lg);padding:22px;border:1px solid var(--border);}
+.dw-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;}
+.dw-title{font-weight:700;font-size:.92rem;color:var(--mid);}
+.dw-action{font-size:.78rem;color:var(--rose);font-weight:600;cursor:pointer;}
+.progress-item{margin-bottom:12px;}
+.progress-item:last-child{margin-bottom:0;}
+.prog-label{display:flex;justify-content:space-between;font-size:.83rem;margin-bottom:5px;font-weight:500;}
+.prog-bar{height:7px;background:var(--border);border-radius:7px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:7px;transition:width .6s ease;}
+.fill-rose{background:linear-gradient(90deg,var(--rose),var(--coral));}
+.fill-gold{background:linear-gradient(90deg,var(--gold),var(--gold-l));}
+.fill-teal{background:linear-gradient(90deg,var(--teal),var(--sky));}
+.fill-purple{background:linear-gradient(90deg,var(--purple),#a855f7);}
+.booking-list{display:flex;flex-direction:column;gap:9px;}
+.booking-item{display:flex;justify-content:space-between;align-items:center;background:var(--cream);padding:11px 14px;border-radius:var(--r-md);border:1px solid var(--border);}
+.bi-left{}.bi-name{font-weight:600;font-size:.85rem;}.bi-sub{font-size:.75rem;color:var(--light);margin-top:1px;}
+.bi-status{padding:4px 11px;border-radius:var(--r-full);font-size:.7rem;font-weight:700;}
+.s-confirmed{background:rgba(5,150,105,.1);color:var(--green);}
+.s-pending{background:rgba(201,149,42,.1);color:var(--gold);}
+.s-discussion{background:rgba(217,79,122,.1);color:var(--rose);}
+.countdown-box{background:linear-gradient(135deg,var(--rose),var(--coral),var(--gold));border-radius:var(--r-lg);padding:24px;color:white;text-align:center;margin-bottom:20px;}
+.countdown-box h3{font-family:'Playfair Display',serif;font-size:1rem;opacity:.9;margin-bottom:16px;}
+.countdown-nums{display:flex;gap:16px;justify-content:center;}
+.cd-unit{text-align:center;}
+.cd-num{font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;line-height:1;}
+.cd-lbl{font-size:.7rem;opacity:.75;margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+.mini-bar-chart{display:flex;align-items:flex-end;gap:5px;height:70px;}
+.mb{flex:1;border-radius:5px 5px 0 0;transition:.3s;}
+.mb:hover{opacity:1!important;}
+.checklist-wrap{display:flex;flex-direction:column;gap:8px;}
+.check-item{display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:var(--r-md);border:1px solid var(--border);background:var(--cream);font-size:.85rem;}
+.check-item.done{opacity:.6;text-decoration:line-through;}
+.check-box{width:20px;height:20px;border-radius:6px;border:2px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:.2s;}
+.check-box.checked{background:linear-gradient(135deg,var(--rose),var(--coral));border-color:var(--rose);color:white;font-size:.7rem;}
+.check-priority{font-size:.68rem;padding:2px 8px;border-radius:var(--r-full);font-weight:700;margin-left:auto;}
+.p-high{background:rgba(240,98,68,.1);color:var(--coral);}
+.p-med{background:rgba(201,149,42,.1);color:var(--gold);}
+.p-low{background:rgba(5,150,105,.1);color:var(--green);}
+
+/* ════════════════════════════════════════
+   GUEST MANAGER
+════════════════════════════════════════ */
+.guest-table{width:100%;border-collapse:collapse;}
+.guest-table th{background:var(--cream);padding:11px 16px;text-align:left;font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--mid);border-bottom:2px solid var(--border);}
+.guest-table td{padding:11px 16px;font-size:.85rem;border-bottom:1px solid var(--border);}
+.guest-table tr:last-child td{border-bottom:none;}
+.guest-table tr:hover td{background:var(--cream);}
+.guest-status{padding:3px 10px;border-radius:var(--r-full);font-size:.7rem;font-weight:700;}
+.gs-confirmed{background:rgba(5,150,105,.1);color:var(--green);}
+.gs-pending{background:rgba(201,149,42,.1);color:var(--gold);}
+.gs-declined{background:rgba(240,98,68,.1);color:var(--coral);}
+
+/* ════════════════════════════════════════
+   SEATING CHART
+════════════════════════════════════════ */
+.seating-canvas{background:linear-gradient(135deg,rgba(217,79,122,.03),rgba(201,149,42,.03));border:2px dashed var(--border2);border-radius:var(--r-xl);padding:30px;min-height:400px;position:relative;overflow:hidden;}
+.stage-box{background:linear-gradient(135deg,var(--rose),var(--coral));color:white;border-radius:var(--r-md);padding:12px 30px;font-weight:700;font-size:.9rem;text-align:center;width:240px;margin:0 auto 30px;}
+.tables-grid{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;}
+.table-circle{width:90px;height:90px;border-radius:50%;border:3px solid var(--border);background:white;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:.3s;text-align:center;position:relative;box-shadow:var(--shadow);}
+.table-circle:hover{border-color:var(--rose);transform:scale(1.08);}
+.table-circle.full{border-color:var(--rose);}
+.table-circle.empty{border-color:var(--border);background:var(--cream);}
+.table-num{font-weight:900;font-size:1.1rem;color:var(--dark);}
+.table-seats{font-size:.65rem;color:var(--light);margin-top:1px;}
+.table-emoji{font-size:.8rem;}
+
+/* ════════════════════════════════════════
+   DIGITAL INVITE
+════════════════════════════════════════ */
+.invite-preview{background:linear-gradient(135deg,#FFF0F5,#FFF8EC,#F5F0FF);border:1px solid var(--border2);border-radius:var(--r-xl);padding:40px;text-align:center;max-width:480px;margin:0 auto;box-shadow:var(--shadow-lg);}
+.invite-floral{font-size:2.5rem;margin-bottom:16px;}
+.invite-together{font-family:'Cormorant Garamond',serif;font-size:.9rem;letter-spacing:3px;text-transform:uppercase;color:var(--light);margin-bottom:8px;}
+.invite-names{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;line-height:1.15;margin-bottom:16px;}
+.invite-amp{font-style:italic;color:var(--rose);}
+.invite-div{width:80px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:16px auto;}
+.invite-details{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--mid);line-height:2;font-style:italic;}
+.invite-venue{font-weight:700;color:var(--dark);font-style:normal;}
+.invite-rsvp{margin-top:24px;display:inline-flex;gap:12px;}
+.invite-btn{padding:10px 24px;border-radius:var(--r-full);font-size:.85rem;font-weight:700;cursor:pointer;border:none;transition:.25s;}
+.invite-btn-accept{background:linear-gradient(135deg,var(--rose),var(--coral));color:white;}
+.invite-btn-decline{background:white;border:1.5px solid var(--border);color:var(--mid);}
+.invite-templates{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;margin-top:24px;}
+.template-card{border:2px solid var(--border);border-radius:var(--r-md);padding:14px;text-align:center;cursor:pointer;transition:.25s;font-size:.82rem;font-weight:600;}
+.template-card:hover,.template-card.active{border-color:var(--rose);background:var(--rose-ll);color:var(--rose);}
+.template-icon{font-size:1.6rem;margin-bottom:6px;}
+
+/* ════════════════════════════════════════
+   REVIEWS
+════════════════════════════════════════ */
+.review-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px;}
+.review-card{background:white;border-radius:var(--r-lg);padding:24px;border:1px solid var(--border);transition:.3s;}
+.review-card:hover{box-shadow:var(--shadow);}
+.rev-head{display:flex;gap:12px;align-items:center;margin-bottom:14px;}
+.rev-ava{width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:linear-gradient(135deg,rgba(217,79,122,.1),rgba(201,149,42,.1));border:2px solid var(--border);}
+.rev-name{font-weight:700;font-size:.93rem;}
+.rev-meta{font-size:.75rem;color:var(--light);margin-top:2px;}
+.rev-stars{display:flex;gap:2px;font-size:.95rem;margin-bottom:10px;}
+.rev-text{font-size:.87rem;color:var(--mid);line-height:1.75;font-style:italic;}
+.rev-vendor{margin-top:12px;font-size:.75rem;color:var(--rose);font-weight:600;}
+.ai-verified-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(0,168,150,.07);color:var(--teal);font-size:.7rem;font-weight:700;padding:3px 10px;border-radius:var(--r-full);margin-top:8px;}
+
+/* ════════════════════════════════════════
+   PAYMENT FLOW
+════════════════════════════════════════ */
+.payment-steps{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0;position:relative;}
+.payment-steps::before{content:'';position:absolute;top:50px;left:12%;right:12%;height:2px;background:linear-gradient(90deg,var(--rose),var(--coral),var(--gold));z-index:0;opacity:.3;}
+.pay-step{text-align:center;padding:28px 20px;position:relative;z-index:1;}
+.pay-step-num{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--coral));color:white;font-weight:900;font-size:1rem;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;box-shadow:0 4px 14px rgba(217,79,122,.3);}
+.pay-step-icon{font-size:2rem;margin-bottom:12px;}
+.pay-step-title{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;margin-bottom:6px;}
+.pay-step-desc{font-size:.82rem;color:var(--light);line-height:1.65;}
+.pay-logos{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:28px;}
+.pay-logo{background:white;border:1.5px solid var(--border);border-radius:var(--r-md);padding:10px 18px;font-size:.82rem;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:6px;}
+
+/* ════════════════════════════════════════
+   VENDOR DASHBOARD
+════════════════════════════════════════ */
+.vendor-dash{padding:90px 5% 60px;}
+.analytics-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:24px;}
+.analytics-card{background:white;border-radius:var(--r-lg);padding:22px;border:1px solid var(--border);position:relative;overflow:hidden;}
+.analytics-card::after{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;border-radius:50%;opacity:.06;}
+.analytics-card:nth-child(1)::after{background:var(--rose);}
+.analytics-card:nth-child(2)::after{background:var(--gold);}
+.analytics-card:nth-child(3)::after{background:var(--teal);}
+.analytics-card:nth-child(4)::after{background:var(--purple);}
+.ac-label{font-size:.78rem;color:var(--light);font-weight:600;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;}
+.ac-value{font-family:'Playfair Display',serif;font-size:1.9rem;font-weight:900;margin-bottom:4px;}
+.ac-change{font-size:.78rem;font-weight:600;}
+.ac-bar{height:4px;background:var(--border);border-radius:4px;margin-top:12px;overflow:hidden;}
+.ac-bar-fill{height:100%;border-radius:4px;}
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:12px;}
+.portfolio-item{border-radius:var(--r-md);overflow:hidden;border:1px solid var(--border);cursor:pointer;transition:.3s;aspect-ratio:1;}
+.portfolio-item:hover{transform:scale(1.03);box-shadow:var(--shadow);}
+.portfolio-emoji{display:flex;align-items:center;justify-content:center;height:100%;font-size:2.5rem;background:var(--cream);}
+.competitor-table{width:100%;border-collapse:collapse;}
+.competitor-table th{background:var(--cream);padding:10px 14px;text-align:left;font-size:.75rem;font-weight:700;text-transform:uppercase;color:var(--mid);border-bottom:2px solid var(--border);}
+.competitor-table td{padding:10px 14px;font-size:.83rem;border-bottom:1px solid var(--border);}
+.comp-you{background:rgba(217,79,122,.04)!important;font-weight:700;}
+
+/* ════════════════════════════════════════
+   WEDDING WEBSITE BUILDER
+════════════════════════════════════════ */
+.wb-preview{background:linear-gradient(135deg,#1C0A2E,#3D1464);border-radius:var(--r-xl);overflow:hidden;box-shadow:var(--shadow-lg);}
+.wb-nav{background:rgba(255,255,255,.08);padding:14px 24px;display:flex;justify-content:space-between;align-items:center;}
+.wb-nav-logo{font-family:'Playfair Display',serif;color:rgba(255,255,255,.9);font-size:1rem;font-weight:700;}
+.wb-nav-links{display:flex;gap:20px;}
+.wb-nav-links a{color:rgba(255,255,255,.6);font-size:.8rem;}
+.wb-hero{padding:60px 40px;text-align:center;}
+.wb-hero-sub{color:rgba(255,255,255,.5);font-size:.8rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;}
+.wb-hero-names{font-family:'Playfair Display',serif;font-size:2.8rem;font-weight:900;color:white;margin-bottom:10px;}
+.wb-hero-date{font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--gold-l);font-style:italic;}
+.wb-sections{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:rgba(255,255,255,.1);}
+.wb-section{background:rgba(255,255,255,.04);padding:20px;text-align:center;}
+.wb-section-icon{font-size:1.6rem;margin-bottom:8px;}
+.wb-section-title{color:rgba(255,255,255,.8);font-size:.85rem;font-weight:600;}
+.wb-section-val{color:var(--gold-l);font-size:.8rem;margin-top:3px;}
+
+/* ════════════════════════════════════════
+   MOODBOARD / THEME AI
+════════════════════════════════════════ */
+.mood-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-bottom:20px;}
+.mood-swatch{height:80px;border-radius:var(--r-md);cursor:pointer;transition:.3s;border:3px solid transparent;display:flex;align-items:center;justify-content:center;font-size:1.5rem;}
+.mood-swatch:hover,.mood-swatch.active{border-color:var(--rose);transform:scale(1.05);}
+.theme-result{background:white;border-radius:var(--r-lg);padding:20px;border:1px solid var(--border);margin-top:20px;}
+.theme-result h4{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:8px;}
+.theme-tags{display:flex;gap:6px;flex-wrap:wrap;}
+
+/* ════════════════════════════════════════
+   VENDOR VERIFICATION
+════════════════════════════════════════ */
+.verify-step{display:flex;gap:14px;padding:18px;background:var(--cream);border-radius:var(--r-md);border:1px solid var(--border);margin-bottom:12px;}
+.verify-icon{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.verify-icon.done{background:rgba(5,150,105,.1);color:var(--green);}
+.verify-icon.pending{background:rgba(201,149,42,.1);color:var(--gold);}
+.verify-icon.todo{background:var(--border);color:var(--light);}
+.verify-text h4{font-weight:700;font-size:.9rem;margin-bottom:3px;}
+.verify-text p{font-size:.8rem;color:var(--light);line-height:1.6;}
+.verify-badge-lrg{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(5,150,105,.1),rgba(0,168,150,.08));color:var(--green);padding:10px 20px;border-radius:var(--r-full);font-weight:700;font-size:.9rem;border:1px solid rgba(5,150,105,.2);margin-top:16px;}
+
+/* ════════════════════════════════════════
+   NOTIFICATIONS
+════════════════════════════════════════ */
+.notif-list{display:flex;flex-direction:column;gap:10px;}
+.notif-item{display:flex;gap:12px;padding:14px;background:var(--cream);border-radius:var(--r-md);border:1px solid var(--border);}
+.notif-item.unread{background:var(--rose-ll);border-color:rgba(217,79,122,.15);}
+.notif-dot{width:9px;height:9px;border-radius:50%;background:var(--rose);flex-shrink:0;margin-top:5px;}
+.notif-dot.read{background:var(--border);}
+.notif-text{flex:1;}
+.notif-title{font-weight:600;font-size:.87rem;margin-bottom:2px;}
+.notif-sub{font-size:.78rem;color:var(--light);}
+.notif-time{font-size:.72rem;color:var(--light);flex-shrink:0;margin-top:2px;}
+
+/* ════════════════════════════════════════
+   DEPLOY GUIDE
+════════════════════════════════════════ */
+.deploy-guide{max-width:820px;margin:0 auto;}
+.deploy-step{display:flex;gap:18px;margin-bottom:28px;}
+.deploy-num{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--coral));color:white;font-weight:900;font-size:1rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 14px rgba(217,79,122,.3);}
+.deploy-content{flex:1;}
+.deploy-content h3{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:6px;}
+.deploy-content p{font-size:.87rem;color:var(--mid);line-height:1.75;margin-bottom:10px;}
+.code-block{background:#1C0A2E;border-radius:var(--r-md);padding:14px 18px;font-family:'Courier New',monospace;font-size:.82rem;color:#e2b4d0;line-height:1.9;overflow-x:auto;border:1px solid rgba(217,79,122,.2);}
+.code-block .cmd{color:#F0CC7A;}.code-block .cmt{color:#6B4F80;font-style:italic;}
+.code-block .str{color:#86efac;}
+.deploy-tip{background:linear-gradient(135deg,rgba(0,168,150,.06),rgba(14,165,233,.04));border:1px solid rgba(0,168,150,.2);border-radius:var(--r-md);padding:12px 16px;font-size:.83rem;color:var(--mid);display:flex;gap:8px;margin-top:10px;line-height:1.7;}
+.deploy-link{color:var(--teal);font-weight:700;text-decoration:underline;cursor:pointer;}
+.tech-stack-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-top:20px;}
+.tech-card{background:white;border-radius:var(--r-md);padding:16px;border:1px solid var(--border);display:flex;align-items:center;gap:12px;}
+.tech-icon{font-size:1.5rem;flex-shrink:0;}
+.tech-name{font-weight:700;font-size:.88rem;}
+.tech-desc{font-size:.75rem;color:var(--light);margin-top:1px;}
+.tech-free{font-size:.7rem;font-weight:700;color:var(--green);margin-top:2px;}
+.milestone-list{display:flex;flex-direction:column;gap:10px;margin-top:14px;}
+.milestone{display:flex;align-items:center;gap:12px;padding:12px 16px;border-radius:var(--r-md);background:var(--cream);border:1px solid var(--border);}
+.m-week{font-size:.7rem;font-weight:700;color:var(--rose);text-transform:uppercase;letter-spacing:.5px;min-width:70px;}
+.m-text{font-size:.85rem;font-weight:500;}
+
+/* ════════════════════════════════════════
+   AI FEATURES CARDS
+════════════════════════════════════════ */
+.ai-feat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px;}
+.ai-feat-card{background:white;border-radius:var(--r-lg);padding:26px;border:1px solid var(--border);transition:.3s;position:relative;overflow:hidden;}
+.ai-feat-card::before{content:'';position:absolute;top:-25px;right:-25px;width:100px;height:100px;border-radius:50%;opacity:.05;}
+.ai-feat-card:nth-child(1)::before{background:var(--rose);}
+.ai-feat-card:nth-child(2)::before{background:var(--gold);}
+.ai-feat-card:nth-child(3)::before{background:var(--teal);}
+.ai-feat-card:nth-child(4)::before{background:var(--purple);}
+.ai-feat-card:nth-child(5)::before{background:var(--coral);}
+.ai-feat-card:nth-child(6)::before{background:var(--sky);}
+.ai-feat-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);}
+.af-icon{width:52px;height:52px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:1.5rem;margin-bottom:16px;}
+.af-card-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:700;margin-bottom:7px;}
+.af-card-desc{font-size:.85rem;color:var(--light);line-height:1.75;}
+
+/* ════════════════════════════════════════
+   FOOTER
+════════════════════════════════════════ */
+footer{background:var(--dark);color:white;padding:56px 5% 28px;}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:40px;}
+@media(max-width:768px){.footer-grid{grid-template-columns:1fr 1fr;}}
+.footer-brand p{color:rgba(255,255,255,.45);font-size:.87rem;line-height:1.85;max-width:260px;margin-top:12px;}
+.footer-social{display:flex;gap:10px;margin-top:16px;}
+.social-icon{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem;cursor:pointer;transition:.2s;}
+.social-icon:hover{background:rgba(217,79,122,.3);border-color:rgba(217,79,122,.4);}
+.footer-col h4{font-weight:700;font-size:.87rem;color:rgba(255,255,255,.8);margin-bottom:16px;}
+.footer-col a{display:block;color:rgba(255,255,255,.4);font-size:.83rem;margin-bottom:9px;transition:.2s;cursor:pointer;}
+.footer-col a:hover{color:var(--rose-l);}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.07);padding-top:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;}
+.footer-bottom p{color:rgba(255,255,255,.25);font-size:.8rem;}
+.footer-certs{display:flex;gap:8px;}
+.f-cert{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.4);font-size:.7rem;padding:4px 12px;border-radius:var(--r-full);}
+
+/* ════════════════════════════════════════
+   TOAST NOTIFICATION
+════════════════════════════════════════ */
+#toast{position:fixed;bottom:28px;right:28px;z-index:9999;display:flex;flex-direction:column;gap:10px;}
+.toast-item{background:var(--dark);color:white;padding:14px 20px;border-radius:var(--r-md);font-size:.87rem;font-weight:500;box-shadow:var(--shadow-lg);border-left:3px solid var(--rose);display:flex;align-items:center;gap:10px;animation:toastIn .35s ease;min-width:260px;}
+.toast-item.success{border-color:var(--green);}
+.toast-item.warning{border-color:var(--amber);}
+@keyframes toastIn{from{opacity:0;transform:translateX(20px);}to{opacity:1;transform:translateX(0);}}
+
+/* ════════════════════════════════════════
+   WHATSAPP WIDGET
+════════════════════════════════════════ */
+#wa-btn{position:fixed;bottom:28px;left:28px;z-index:500;width:54px;height:54px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:1.5rem;cursor:pointer;box-shadow:0 4px 20px rgba(37,211,102,.4);transition:.3s;}
+#wa-btn:hover{transform:scale(1.1);}
+
+/* ════════════════════════════════════════
+   MISC HELPERS
+════════════════════════════════════════ */
+.text-center{text-align:center;}
+.text-rose{color:var(--rose);}
+.text-gold{color:var(--gold);}
+.text-teal{color:var(--teal);}
+.text-light{color:var(--light);}
+.mt-8{margin-top:8px;}.mt-12{margin-top:12px;}.mt-16{margin-top:16px;}.mt-20{margin-top:20px;}.mt-24{margin-top:24px;}
+.mb-8{margin-bottom:8px;}.mb-12{margin-bottom:12px;}.mb-16{margin-bottom:16px;}.mb-20{margin-bottom:20px;}.mb-24{margin-bottom:24px;}
+.hidden{display:none!important;}
+.divider{height:1px;background:var(--border);margin:24px 0;}
+.w-full{width:100%;}
+.pointer{cursor:pointer;}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVBAR ═══ -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <span class="grad-text serif">Nikah<em>Hub</em></span>
+  </div>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home')" class="active" id="nl-home">🏠 Home</a>
+    <a href="#" onclick="showPage('vendors')" id="nl-vendors">🏢 Vendors</a>
+    <a href="#" onclick="showPage('dashboard')" id="nl-dash">📊 Dashboard</a>
+    <a href="#" onclick="showPage('vendor-dash')" id="nl-vdash">💼 Vendor Portal</a>
+    <a href="#" onclick="showPage('deploy')" id="nl-deploy">🚀 Deploy Guide</a>
+  </div>
+  <div class="nav-right">
+    <button class="btn btn-secondary btn-sm" onclick="showPage('vendors')">Browse Vendors</button>
+    <button class="btn btn-primary btn-sm" onclick="openBooking()">Plan Wedding 💍</button>
+    <div class="nav-avatar" onclick="showPage('dashboard')">F</div>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+  </div>
+</nav>
+
+<!-- ═══ PAGES ═══ -->
+
+<!-- ══════════ HOME PAGE ══════════ -->
+<div class="page active" id="page-home">
+
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <div class="floating-card fc-1">✅ Venue Booked! Grand Palazzo</div>
+    <div class="floating-card fc-2">🤖 AI found 12 perfect vendors</div>
+    <div class="floating-card fc-3">💰 Saved 18,400 AED with AI tips</div>
+    <div class="hero-content">
+      <div class="hero-flag">🇦🇪 Dubai's First AI Wedding Operating System</div>
+      <h1 class="hero-h1">
+        Plan Your Perfect<br>
+        <span class="grad-text serif italic">Dubai Wedding</span><br>
+        With AI Intelligence
+      </h1>
+      <p class="hero-sub">From venue to vows — NikahHub's AI orchestrates every detail, matches verified vendors, optimizes your budget and secures payments in one smart platform.</p>
+      <div class="hero-btns">
+        <button class="btn btn-primary btn-lg" onclick="document.getElementById('ai-section').scrollIntoView({behavior:'smooth'})">🤖 Start AI Planner</button>
+        <button class="btn btn-secondary btn-lg" onclick="showPage('vendors')">Browse 2,400+ Vendors</button>
+        <button class="btn btn-gold btn-lg" onclick="showPage('dashboard')">View Dashboard</button>
+      </div>
+      <div class="hero-stats">
+        <div class="h-stat"><div class="h-stat-num grad-text serif">2,400+</div><div class="h-stat-lbl">Verified Vendors</div></div>
+        <div class="h-stat"><div class="h-stat-num grad-text serif">8,200+</div><div class="h-stat-lbl">Happy Weddings</div></div>
+        <div class="h-stat"><div class="h-stat-num grad-text serif">94%</div><div class="h-stat-lbl">Budget Accuracy</div></div>
+        <div class="h-stat"><div class="h-stat-num grad-text serif">4.9★</div><div class="h-stat-lbl">Platform Rating</div></div>
+        <div class="h-stat"><div class="h-stat-num grad-text serif">AED 18K</div><div class="h-stat-lbl">Avg. Saved Per Couple</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CATEGORIES -->
+  <section class="section" style="background:var(--bg2);">
+    <div class="sec-head">
+      <div class="pre-tag"><span class="badge badge-gold">📂 All Categories</span></div>
+      <h2>Every Service, <span class="grad-text italic">Verified</span></h2>
+      <p>9 categories, 2,400+ verified vendors across Dubai, Abu Dhabi & Sharjah</p>
+    </div>
+    <div class="cat-grid">
+      <div class="cat-card" onclick="showPage('vendors');filterByCategory('Halls')"><div class="cat-icon-wrap">🏛️</div><div class="cat-name">Wedding Halls</div><div class="cat-count">320 vendors</div></div>
+      <div class="cat-card" onclick="showPage('vendors');filterByCategory('Photography')"><div class="cat-icon-wrap">📸</div><div class="cat-name">Photography</div><div class="cat-count">480 vendors</div></div>
+      <div class="cat-card" onclick="showPage('vendors');filterByCategory('Video')"><div class="cat-icon-wrap">🎥</div><div class="cat-name">Videography</div><div class="cat-count">220 vendors</div></div>
+      <div class="cat-card" onclick="showPage('vendors');filterByCategory('Makeup')"><div class="cat-icon-wrap">💄</div><div class="cat-name">Makeup Artists</div><div class="cat-count">390 vendors</div></div>
+      <div class="cat-card" onclick="showPage('vendors');filterByCategory('Catering')"><div class="cat-icon-wrap">🍽️</div><div class="cat-name">Catering</div><div class="cat-count">280 vendors</div></div>
+      <div class="cat-card" onclick="showPage('vendors');filterByCategory('Decor')"><div class="cat-icon-wrap">🌸</div><div class="cat-name">Decoration</div><div class="cat-count">350 vendors</div></div>
+      <div class="cat-card" onclick="showPage('vendors');filterByCategory('Bridal')"><div class="cat-icon-wrap">👗</div><div class="cat-name">Bridal Wear</div><div class="cat-count">180 vendors</div></div>
+      <div class="cat-card" onclick="showPage('vendors');filterByCategory('Planner')"><div class="cat-icon-wrap">📋</div><div class="cat-name">Event Planners</div><div class="cat-count">140 vendors</div></div>
+      <div class="cat-card" onclick="showPage('vendors');filterByCategory('DJ')"><div class="cat-icon-wrap">🎵</div><div class="cat-name">DJ & Music</div><div class="cat-count">90 vendors</div></div>
+    </div>
+  </section>
+
+  <!-- AI CHAT -->
+  <section class="section" id="ai-section" style="background:var(--bg3);">
+    <div class="sec-head">
+      <div class="pre-tag"><span class="badge badge-rose">🤖 AI Planner</span></div>
+      <h2>Meet <span class="grad-text italic">Laila</span> — Your AI Wedding Planner</h2>
+      <p>Chat naturally and get a complete personalized wedding plan, vendor matches & budget breakdown instantly.</p>
+    </div>
+    <div class="chat-wrap">
+      <div class="chat-hd">
+        <div class="chat-ai-ava">💎</div>
+        <div class="chat-ai-info">
+          <h3>Laila – AI Wedding Planner</h3>
+          <p>Powered by NikahHub Intelligence · Speaks Arabic, Urdu, Hindi, English</p>
+        </div>
+        <div class="chat-status"><span class="status-pulse"></span> Online & Ready</div>
+      </div>
+      <div class="chat-msgs" id="chatMsgs">
+        <div class="msg-row ai">
+          <div class="msg-ava">💎</div>
+          <div>
+            <div class="msg-bubble">Assalamualaikum! 💍 I'm Laila, your AI wedding planner. I'll create a perfect, personalized wedding plan for Dubai. Let's start — <strong>when is your wedding date?</strong></div>
+            <div class="opts-row">
+              <button class="opt" onclick="chatOpt(this,'3–6 months away')">3–6 months</button>
+              <button class="opt" onclick="chatOpt(this,'6–12 months away')">6–12 months</button>
+              <button class="opt" onclick="chatOpt(this,'Over 1 year away')">1+ year</button>
+              <button class="opt" onclick="chatOpt(this,'Already have a date')">Specific date</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="chat-input-row">
+        <input type="text" class="chat-input" id="chatInput" placeholder="Type in English, Arabic, or Urdu..." onkeydown="if(event.key==='Enter')sendChat()">
+        <button class="chat-send" onclick="sendChat()">➤</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI FEATURES -->
+  <section class="section">
+    <div class="sec-head">
+      <div class="pre-tag"><span class="badge badge-purple">⚡ AI Superpowers</span></div>
+      <h2>Intelligence That Makes<br><span class="grad-text italic">Every Wedding Perfect</span></h2>
+    </div>
+    <div class="ai-feat-grid">
+      <div class="ai-feat-card">
+        <div class="af-icon" style="background:rgba(217,79,122,.1)">🤖</div>
+        <div class="af-card-title">Conversational AI Planner</div>
+        <div class="af-card-desc">Tell Laila "Plan my wedding for 50,000 AED" and get a complete plan with vendors, budget breakdown, and timeline in minutes. Supports Arabic, Urdu & English.</div>
+        <div class="mt-12"><span class="badge badge-rose">Core Feature</span></div>
+      </div>
+      <div class="ai-feat-card">
+        <div class="af-icon" style="background:rgba(201,149,42,.1)">💰</div>
+        <div class="af-card-title">Smart Budget Optimizer</div>
+        <div class="af-card-desc">Over budget? AI suggests alternative vendors, off-season dates, guest list adjustments and creative cost cuts — without sacrificing your dream wedding.</div>
+        <div class="mt-12"><span class="badge badge-gold">Saves Money</span></div>
+      </div>
+      <div class="ai-feat-card">
+        <div class="af-icon" style="background:rgba(0,168,150,.1)">📈</div>
+        <div class="af-card-title">Demand Prediction Engine</div>
+        <div class="af-card-desc">AI analyzes Dubai seasons, Ramadan, national holidays and major events to predict vendor prices weeks in advance. Get price drop alerts automatically.</div>
+        <div class="mt-12"><span class="badge badge-teal">Live Intel</span></div>
+      </div>
+      <div class="ai-feat-card">
+        <div class="af-icon" style="background:rgba(109,40,217,.08)">⚖️</div>
+        <div class="af-card-title">Fair Price Benchmarking</div>
+        <div class="af-card-desc">AI analyzes 8,200+ real weddings to show fair price ranges. Know instantly if a vendor is overcharging: "Fair range: 8,000–10,000 AED for this category."</div>
+        <div class="mt-12"><span class="badge badge-purple">Market Intel</span></div>
+      </div>
+      <div class="ai-feat-card">
+        <div class="af-icon" style="background:rgba(240,98,68,.1)">📄</div>
+        <div class="af-card-title">Auto Contract Generator</div>
+        <div class="af-card-desc">Every booking auto-generates a legally-structured bilingual (English/Arabic) contract with payment schedule, service deliverables and cancellation terms.</div>
+        <div class="mt-12"><span class="badge badge-amber">Legal Protection</span></div>
+      </div>
+      <div class="ai-feat-card">
+        <div class="af-icon" style="background:rgba(14,165,233,.1)">🛡️</div>
+        <div class="af-card-title">Fraud Detection Layer</div>
+        <div class="af-card-desc">AI flags suspicious vendors: review manipulation, price anomalies, fake accounts. Only vendors passing our 7-point verification earn the Verified badge.</div>
+        <div class="mt-12"><span class="badge badge-teal">Trust Layer</span></div>
+      </div>
+      <div class="ai-feat-card">
+        <div class="af-icon" style="background:rgba(217,79,122,.1)">🎨</div>
+        <div class="af-card-title">Mood Board Theme AI</div>
+        <div class="af-card-desc">Upload Pinterest/Instagram inspiration or pick swatches. AI extracts your wedding DNA — colors, style, vibe — and auto-matches vendors to your exact aesthetic.</div>
+        <div class="mt-12"><span class="badge badge-rose">Creative AI</span></div>
+      </div>
+      <div class="ai-feat-card">
+        <div class="af-icon" style="background:rgba(201,149,42,.1)">🔮</div>
+        <div class="af-card-title">Muhurat Date Selector</div>
+        <div class="af-card-desc">For Hindu weddings, AI calculates auspicious dates based on birth charts and Hindu calendar. For Muslim weddings, optimal dates avoiding Ramadan/Eid periods.</div>
+        <div class="mt-12"><span class="badge badge-gold">Cultural Intelligence</span></div>
+      </div>
+      <div class="ai-feat-card">
+        <div class="af-icon" style="background:rgba(5,150,105,.1)">🤝</div>
+        <div class="af-card-title">AI Negotiation Assistant</div>
+        <div class="af-card-desc">AI helps you write professional negotiation messages to vendors based on market rates, similar bookings, and seasonal demand. Typically saves 10–20% on vendor costs.</div>
+        <div class="mt-12"><span class="badge badge-green">Save More</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BUDGET TOOL -->
+  <section class="section" style="background:var(--bg2);" id="budget-sec">
+    <div class="sec-head">
+      <div class="pre-tag"><span class="badge badge-gold">💳 Budget Planner</span></div>
+      <h2>AI Budget <span class="grad-text italic">Optimizer</span></h2>
+      <p>Drag the slider. AI instantly calculates optimal spending based on 8,200+ Dubai weddings.</p>
+    </div>
+    <div class="budget-tool">
+      <div class="budget-header">
+        <h3>Smart Wedding Budget Calculator</h3>
+        <p>AI-recommended distribution · Updates in real-time · Includes optimization tips</p>
+      </div>
+      <div class="slider-wrap">
+        <div class="slider-label">
+          <span>Total Budget</span>
+          <span class="slider-val grad-text serif" id="budgetVal">50,000 AED</span>
+        </div>
+        <input type="range" class="range-slider" id="budgetRange" min="20000" max="250000" value="50000" step="5000" oninput="updateBudget(this.value)" style="background:linear-gradient(to right,var(--rose) 0%,var(--rose) 21%,var(--border) 21%,var(--border) 100%);">
+      </div>
+      <div class="budget-grid" id="budgetGrid"></div>
+      <div class="ai-tip-box" id="aiTipBox">💡 Loading AI tip...</div>
+      <div class="optimizer-panel">
+        <h4>🤖 AI Optimization Suggestions</h4>
+        <div class="suggestion-list" id="optimizerList"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAYMENT SECTION -->
+  <section class="section" style="background:var(--bg3);">
+    <div class="sec-head">
+      <div class="pre-tag"><span class="badge badge-teal">🔒 Secure Payments</span></div>
+      <h2>Escrow-Protected <span class="grad-text italic">Payments</span></h2>
+      <p>Your money is 100% protected. Vendors only receive payment after delivering their service.</p>
+    </div>
+    <div class="payment-steps">
+      <div class="pay-step"><div class="pay-step-num">1</div><div class="pay-step-icon">🔒</div><div class="pay-step-title">Pay Deposit</div><div class="pay-step-desc">Pay 20–30% deposit. Funds held securely in NikahHub escrow vault.</div></div>
+      <div class="pay-step"><div class="pay-step-num">2</div><div class="pay-step-icon">📋</div><div class="pay-step-title">Contract Generated</div><div class="pay-step-desc">AI auto-generates bilingual contract with full terms & payment schedule.</div></div>
+      <div class="pay-step"><div class="pay-step-num">3</div><div class="pay-step-icon">📅</div><div class="pay-step-title">Track Progress</div><div class="pay-step-desc">Real-time dashboard shows all bookings, payments, and upcoming milestones.</div></div>
+      <div class="pay-step"><div class="pay-step-num">4</div><div class="pay-step-icon">🎊</div><div class="pay-step-title">Event Day</div><div class="pay-step-desc">Vendor delivers service. Your day-of coordinator mode activates automatically.</div></div>
+      <div class="pay-step"><div class="pay-step-num">5</div><div class="pay-step-icon">✅</div><div class="pay-step-title">Confirm & Release</div><div class="pay-step-desc">Confirm satisfaction, release payment. Rate vendor. Dispute system available.</div></div>
+    </div>
+    <div class="pay-logos">
+      <div class="pay-logo">💳 Stripe</div>
+      <div class="pay-logo">🏦 PayTabs</div>
+      <div class="pay-logo">🛒 Tabby BNPL</div>
+      <div class="pay-logo">💰 Tamara</div>
+      <div class="pay-logo">💵 Multi-Currency</div>
+    </div>
+  </section>
+
+  <!-- MOODBOARD AI -->
+  <section class="section">
+    <div class="sec-head">
+      <div class="pre-tag"><span class="badge badge-rose">🎨 Theme AI</span></div>
+      <h2>Wedding <span class="grad-text italic">Mood Board</span> Analyzer</h2>
+      <p>Pick your aesthetic vibes. AI matches vendors to your exact style and generates your wedding theme profile.</p>
+    </div>
+    <div style="max-width:700px;margin:0 auto;">
+      <p class="text-light mb-16" style="font-size:.88rem;">Select the moods that match your vision:</p>
+      <div class="mood-grid">
+        <div class="mood-swatch active" style="background:linear-gradient(135deg,#FFE4E1,#FFB3C6);" onclick="toggleMood(this,'Romantic Rose')">🌹</div>
+        <div class="mood-swatch" style="background:linear-gradient(135deg,#FFF8DC,#FFD700);" onclick="toggleMood(this,'Royal Gold')">👑</div>
+        <div class="mood-swatch" style="background:linear-gradient(135deg,#E8F4F8,#B0D4E8);" onclick="toggleMood(this,'Coastal Blue')">🌊</div>
+        <div class="mood-swatch" style="background:linear-gradient(135deg,#F0E6FF,#C8A2C8);" onclick="toggleMood(this,'Mystical Lavender')">💜</div>
+        <div class="mood-swatch" style="background:linear-gradient(135deg,#E8FFE8,#90EE90);" onclick="toggleMood(this,'Garden Greenery')">🌿</div>
+        <div class="mood-swatch" style="background:linear-gradient(135deg,#FFF,#F5F5F5);" onclick="toggleMood(this,'Modern Minimalist')">🤍</div>
+        <div class="mood-swatch" style="background:linear-gradient(135deg,#1C0A2E,#4A0E4E);" onclick="toggleMood(this,'Midnight Glamour')">✨</div>
+        <div class="mood-swatch" style="background:linear-gradient(135deg,#FFE0B2,#FF8C00);" onclick="toggleMood(this,'Desert Sunset')">🏜️</div>
+      </div>
+      <div class="theme-result" id="themeResult">
+        <h4>🎯 Your Wedding Theme: <span class="grad-text">Romantic Rose</span></h4>
+        <p class="text-light mb-12" style="font-size:.83rem;">Based on your selections, Laila AI recommends:</p>
+        <div class="theme-tags">
+          <span class="badge badge-rose">Floral Arches</span>
+          <span class="badge badge-gold">Candlelight Centerpieces</span>
+          <span class="badge badge-teal">Blush & Gold Palette</span>
+          <span class="badge badge-purple">Soft Draping</span>
+          <span class="badge badge-rose">Garden Reception</span>
+        </div>
+        <div class="mt-16"><button class="btn btn-primary btn-sm" onclick="showPage('vendors')">🤖 See AI-Matched Vendors for This Theme</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WEDDING WEBSITE BUILDER PREVIEW -->
+  <section class="section" style="background:var(--bg2);">
+    <div class="sec-head">
+      <div class="pre-tag"><span class="badge badge-purple">🌐 Website Builder</span></div>
+      <h2>Your Personal <span class="grad-text italic">Wedding Website</span></h2>
+      <p>Get your own beautiful wedding website at nikahhub.com/your-names with RSVP, countdown, map & love story.</p>
+    </div>
+    <div class="wb-preview" style="max-width:700px;margin:0 auto;">
+      <div class="wb-nav">
+        <div class="wb-nav-logo">fatima-ahmed.nikahhub.com</div>
+        <div class="wb-nav-links"><a>Our Story</a><a>Gallery</a><a>RSVP</a><a>Venue</a></div>
+      </div>
+      <div class="wb-hero">
+        <div style="color:var(--gold-l);font-size:.75rem;letter-spacing:3px;text-transform:uppercase;margin-bottom:10px;">Together Forever</div>
+        <div class="wb-hero-names">Fatima <span style="color:var(--rose-l);font-style:italic;">&</span> Ahmed</div>
+        <div class="wb-hero-date">Saturday, March 15, 2026 · Grand Palazzo, Dubai Marina</div>
+        <div class="countdown-nums" style="margin-top:20px;">
+          <div class="cd-unit"><div class="cd-num" id="wcd-days">107</div><div class="cd-lbl" style="color:rgba(255,255,255,.5)">Days</div></div>
+          <div class="cd-unit"><div class="cd-num">14</div><div class="cd-lbl" style="color:rgba(255,255,255,.5)">Hours</div></div>
+          <div class="cd-unit"><div class="cd-num">32</div><div class="cd-lbl" style="color:rgba(255,255,255,.5)">Min</div></div>
+          <div class="cd-unit"><div class="cd-num">08</div><div class="cd-lbl" style="color:rgba(255,255,255,.5)">Sec</div></div>
+        </div>
+      </div>
+      <div class="wb-sections">
+        <div class="wb-section"><div class="wb-section-icon">💌</div><div class="wb-section-title">RSVP</div><div class="wb-section-val">248 confirmed</div></div>
+        <div class="wb-section"><div class="wb-section-icon">📍</div><div class="wb-section-title">Venue</div><div class="wb-section-val">Get Directions</div></div>
+        <div class="wb-section"><div class="wb-section-icon">🎁</div><div class="wb-section-title">Gift Registry</div><div class="wb-section-val">View Wishlist</div></div>
+      </div>
+    </div>
+    <div class="text-center mt-24">
+      <button class="btn btn-primary" onclick="showToast('Wedding website builder coming soon! 🌐','success')">🌐 Create Your Wedding Website — Free</button>
+    </div>
+  </section>
+
+  <!-- DIGITAL INVITATIONS -->
+  <section class="section" style="background:var(--bg3);">
+    <div class="sec-head">
+      <div class="pre-tag"><span class="badge badge-gold">💌 Digital Invites</span></div>
+      <h2>Beautiful <span class="grad-text italic">Digital Invitations</span></h2>
+      <p>Stunning animated invitations. Share via WhatsApp, Email & SMS. Includes RSVP tracking built in.</p>
+    </div>
+    <div class="invite-templates mb-24" style="max-width:700px;margin:0 auto 24px;">
+      <div class="template-card active" onclick="selectTemplate(this,'Romantic Bloom')"><div class="template-icon">🌸</div>Romantic Bloom</div>
+      <div class="template-card" onclick="selectTemplate(this,'Royal Gold')"><div class="template-icon">👑</div>Royal Gold</div>
+      <div class="template-card" onclick="selectTemplate(this,'Desert Dreams')"><div class="template-icon">🏜️</div>Desert Dreams</div>
+      <div class="template-card" onclick="selectTemplate(this,'Modern Luxe')"><div class="template-icon">💎</div>Modern Luxe</div>
+    </div>
+    <div class="invite-preview" id="invitePreview">
+      <div class="invite-floral">🌸🌷🌸</div>
+      <div class="invite-together">Together With Their Families</div>
+      <div class="invite-names">Fatima <span class="invite-amp">&</span><br>Ahmed</div>
+      <div class="invite-div"></div>
+      <div class="invite-details">
+        Request the honour of your presence<br>
+        <strong class="invite-venue">Saturday, 15 March 2026</strong><br>
+        7:00 PM · Grand Palazzo, Dubai Marina<br>
+        <em>Dress Code: Formal Attire</em>
+      </div>
+      <div class="invite-rsvp">
+        <button class="invite-btn invite-btn-accept" onclick="showToast('✅ RSVP Confirmed! Jazakallah Khair 💍')">Accept with Joy</button>
+        <button class="invite-btn invite-btn-decline" onclick="showToast('RSVP declined — we\'ll miss you! 💙','warning')">Send Regrets</button>
+      </div>
+    </div>
+    <div class="text-center mt-24">
+      <div class="flex-center gap-12 flex-wrap">
+        <button class="btn btn-primary btn-sm" onclick="showToast('Invitation sent via WhatsApp! 📱','success')">📱 Send via WhatsApp</button>
+        <button class="btn btn-secondary btn-sm" onclick="showToast('Invitation sent via Email! 📧','success')">📧 Send via Email</button>
+        <button class="btn btn-teal btn-sm" onclick="showToast('SMS invitations sent! 💬','success')">💬 Send SMS</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="section">
+    <div class="sec-head">
+      <div class="pre-tag"><span class="badge badge-rose">⭐ AI-Verified Reviews</span></div>
+      <h2>Real <span class="grad-text italic">Weddings</span>, Real Stories</h2>
+      <p>All reviews AI-verified for authenticity. No fake stars, no paid promotions — ever.</p>
+    </div>
+    <div class="review-grid">
+      <div class="review-card"><div class="rev-head"><div class="rev-ava">👰</div><div><div class="rev-name">Sana & Omar Qureshi</div><div class="rev-meta">Pakistani Wedding · Dubai Marina · Jan 2025</div></div></div><div class="rev-stars">⭐⭐⭐⭐⭐</div><div class="rev-text">"NikahHub ka AI planner ne hamari poori wedding 3 din mein plan kar di. Budget 70K tha, AI ne 68,500 mein perfect plan diya. Grand Palazzo absolutely stunning tha. Escrow payment system ne humain peace of mind diya."</div><div class="rev-vendor">🏛️ Grand Palazzo · 📸 Lumière Studios</div><div class="ai-verified-badge">🤖 AI Verified</div></div>
+      <div class="review-card"><div class="rev-head"><div class="rev-ava">💑</div><div><div class="rev-name">Aisha & Khalid Al-Rashidi</div><div class="rev-meta">Arab Wedding · Downtown Dubai · Dec 2024</div></div></div><div class="rev-stars">⭐⭐⭐⭐⭐</div><div class="rev-text">"The fair price benchmark showed us a venue was overcharging by 35%. We switched vendors, saved 14,000 AED and got an even better hall. The auto-generated contract in Arabic was incredibly professional."</div><div class="rev-vendor">🌸 Bloom & Glam · 💄 Aisha Artistry</div><div class="ai-verified-badge">🤖 AI Verified</div></div>
+      <div class="review-card"><div class="rev-head"><div class="rev-ava">🤵</div><div><div class="rev-name">Priya & Rahul Sharma</div><div class="rev-meta">Indian Wedding · Palm Jumeirah · Feb 2025</div></div></div><div class="rev-stars">⭐⭐⭐⭐⭐</div><div class="rev-text">"The Muhurat date selector was a blessing! AI calculated the perfect auspicious date. Demand predictor saved us 22,000 AED by suggesting January instead of December. The seating chart tool was magical!"</div><div class="rev-vendor">🍽️ Royal Feast · 🎥 Cinematic Dubai</div><div class="ai-verified-badge">🤖 AI Verified</div></div>
+    </div>
+  </section>
+
+  <!-- VENDOR CTA BANNER -->
+  <section style="background:linear-gradient(135deg,var(--rose),var(--coral),var(--gold));padding:60px 5%;text-align:center;">
+    <h2 class="serif" style="font-size:2.2rem;color:white;font-weight:900;margin-bottom:8px;">Are You a Wedding Vendor in Dubai?</h2>
+    <p style="color:rgba(255,255,255,.85);font-size:1.1rem;font-family:'Cormorant Garamond',serif;font-style:italic;margin-bottom:28px;">Join 2,400+ verified vendors. Get AI-matched with couples. Grow your business.</p>
+    <div class="flex-center gap-14 flex-wrap">
+      <button class="btn btn-secondary" style="background:white;color:var(--rose);" onclick="showPage('vendor-dash')">📋 Create Vendor Profile</button>
+      <button class="btn" style="background:rgba(255,255,255,.15);color:white;border:1.5px solid rgba(255,255,255,.4);" onclick="showToast('Vendor info pack sent to your email! 📧','success')">Learn More →</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="serif" style="font-size:1.7rem;font-weight:900;background:linear-gradient(135deg,var(--rose),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">NikahHub</div>
+        <p>Dubai's first AI-powered wedding operating system. Connecting couples with perfect vendors through intelligent matching, smart budgeting & secure payments.</p>
+        <div class="footer-social">
+          <div class="social-icon">📘</div><div class="social-icon">📸</div><div class="social-icon">🐦</div><div class="social-icon">💼</div><div class="social-icon">📱</div>
+        </div>
+      </div>
+      <div class="footer-col"><h4>For Couples</h4><a onclick="showPage('home')">AI Wedding Planner</a><a onclick="showPage('vendors')">Browse Vendors</a><a onclick="showPage('dashboard')">My Dashboard</a><a>Budget Calculator</a><a>Real Weddings</a><a>Digital Invitations</a></div>
+      <div class="footer-col"><h4>For Vendors</h4><a onclick="showPage('vendor-dash')">Create Profile</a><a>Vendor Dashboard</a><a>Pricing Plans</a><a>Verification</a><a>Success Stories</a></div>
+      <div class="footer-col"><h4>Company</h4><a>About NikahHub</a><a>Blog & Magazine</a><a onclick="showPage('deploy')">Deploy Guide</a><a>Privacy Policy</a><a>Terms of Service</a><a>Contact Us</a></div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 NikahHub FZ-LLC · Dubai Internet City, UAE · All rights reserved</p>
+      <div class="footer-certs"><span class="f-cert">🔒 SSL</span><span class="f-cert">🇦🇪 UAE Licensed</span><span class="f-cert">💳 Stripe Partner</span><span class="f-cert">🛡️ Escrow Protected</span></div>
+    </div>
+  </footer>
+</div>
+
+<!-- ══════════ VENDORS PAGE ══════════ -->
+<div class="page" id="page-vendors">
+  <div style="padding:90px 5% 60px;">
+    <div class="flex-between mb-24 flex-wrap gap-16">
+      <div>
+        <h2 class="serif" style="font-size:2rem;font-weight:900;">Find Your Perfect <span class="grad-text italic">Vendors</span></h2>
+        <p class="text-light" style="font-size:.88rem;">2,400+ verified vendors · AI match scores · Real-time availability</p>
+      </div>
+      <div class="flex gap-8">
+        <button class="btn btn-secondary btn-sm" onclick="showPage('home')">← Back</button>
+        <button class="btn btn-primary btn-sm" onclick="openBooking()">🤖 AI Match Me</button>
+      </div>
+    </div>
+    <div class="demand-alert">⚠️ <strong>High Demand Alert:</strong> November–December dates are 25% above average. Consider January for 15–20% savings. <button class="btn btn-sm" style="background:white;border:1px solid var(--coral);color:var(--coral);margin-left:auto;" onclick="showToast('AI has found great January vendors for you! 🎉','success')">Show Jan Deals</button></div>
+    <div class="filter-bar">
+      <input type="text" class="search-input" id="vendorSearch" placeholder="🔍 Search vendors, styles, locations..." oninput="filterVendors()">
+      <select class="filter-sel" id="catFilter" onchange="filterVendors()"><option value="">All Categories</option><option>Wedding Halls</option><option>Photography</option><option>Videography</option><option>Makeup Artists</option><option>Catering</option><option>Decoration</option><option>Bridal Wear</option><option>Event Planners</option><option>DJ & Music</option></select>
+      <select class="filter-sel" id="locationFilter" onchange="filterVendors()"><option value="">All Locations</option><option>Dubai Marina</option><option>Downtown Dubai</option><option>Palm Jumeirah</option><option>JBR</option><option>Jumeirah</option><option>Sharjah</option></select>
+      <select class="filter-sel" id="budgetFilter" onchange="filterVendors()"><option value="">Any Budget</option><option>Under 5K</option><option>5K–15K</option><option>15K–30K</option><option>30K+</option></select>
+      <button class="btn btn-primary btn-sm" onclick="showToast('AI is finding your best matches! 🤖','success')">🤖 AI Match</button>
+    </div>
+    <div class="cat-pills" id="catPills">
+      <button class="cat-pill active" onclick="filterCatPill(this,'')">🌟 All</button>
+      <button class="cat-pill" onclick="filterCatPill(this,'Halls')">🏛️ Halls</button>
+      <button class="cat-pill" onclick="filterCatPill(this,'Photography')">📸 Photo</button>
+      <button class="cat-pill" onclick="filterCatPill(this,'Video')">🎥 Video</button>
+      <button class="cat-pill" onclick="filterCatPill(this,'Makeup')">💄 Makeup</button>
+      <button class="cat-pill" onclick="filterCatPill(this,'Catering')">🍽️ Food</button>
+      <button class="cat-pill" onclick="filterCatPill(this,'Decor')">🌸 Decor</button>
+      <button class="cat-pill" onclick="filterCatPill(this,'Bridal')">👗 Bridal</button>
+      <button class="cat-pill" onclick="filterCatPill(this,'DJ')">🎵 DJ</button>
+    </div>
+    <div class="vendor-grid" id="vendorGrid"></div>
+  </div>
+</div>
+
+<!-- ══════════ DASHBOARD PAGE ══════════ -->
+<div class="page" id="page-dashboard">
+  <div class="dash-wrap">
+    <div class="dash-top">
+      <div class="dash-greeting">
+        <h2>Welcome back, <span class="grad-text">Fatima</span> 💍</h2>
+        <p>Your wedding is in <strong>107 days</strong> · 6 of 9 services booked · 54% budget spent</p>
+      </div>
+      <div class="flex gap-8 flex-wrap">
+        <button class="btn btn-secondary btn-sm" onclick="showPage('home')">← Home</button>
+        <button class="btn btn-primary btn-sm" onclick="openBooking()">+ Book Vendor</button>
+        <div style="position:relative;">
+          <button class="btn btn-ghost btn-sm" onclick="toggleNotifs()">🔔 <span class="badge badge-rose" style="padding:2px 7px;font-size:.65rem;">5</span></button>
+          <div id="notifPanel" style="display:none;position:absolute;right:0;top:44px;width:320px;background:white;border-radius:var(--r-lg);border:1px solid var(--border);box-shadow:var(--shadow-lg);padding:16px;z-index:100;">
+            <div class="flex-between mb-12"><strong style="font-size:.9rem;">Notifications</strong><span class="text-rose" style="font-size:.78rem;cursor:pointer;" onclick="markAllRead()">Mark all read</span></div>
+            <div class="notif-list">
+              <div class="notif-item unread"><div class="notif-dot"></div><div class="notif-text"><div class="notif-title">📸 Lumière Studios confirmed!</div><div class="notif-sub">Photography booking confirmed for March 15</div></div><div class="notif-time">2h ago</div></div>
+              <div class="notif-item unread"><div class="notif-dot"></div><div class="notif-text"><div class="notif-title">💰 Price drop detected!</div><div class="notif-sub">Your saved florist dropped price by 12%</div></div><div class="notif-time">5h ago</div></div>
+              <div class="notif-item unread"><div class="notif-dot"></div><div class="notif-text"><div class="notif-title">⚠️ Action needed</div><div class="notif-sub">Makeup artist deposit due in 3 days</div></div><div class="notif-time">1d ago</div></div>
+              <div class="notif-item"><div class="notif-dot read"></div><div class="notif-text"><div class="notif-title">🤖 AI found 3 new matches</div><div class="notif-sub">New vendors matching your theme added</div></div><div class="notif-time">2d ago</div></div>
+              <div class="notif-item"><div class="notif-dot read"></div><div class="notif-text"><div class="notif-title">📋 Contract ready</div><div class="notif-sub">Royal Feast catering contract ready to sign</div></div><div class="notif-time">3d ago</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="dash-tabs mb-20">
+      <button class="dash-tab active" onclick="switchDashTab(this,'overview')">Overview</button>
+      <button class="dash-tab" onclick="switchDashTab(this,'checklist')">Checklist</button>
+      <button class="dash-tab" onclick="switchDashTab(this,'guests')">Guests</button>
+      <button class="dash-tab" onclick="switchDashTab(this,'seating')">Seating</button>
+      <button class="dash-tab" onclick="switchDashTab(this,'payments')">Payments</button>
+      <button class="dash-tab" onclick="switchDashTab(this,'analytics')">Analytics</button>
+    </div>
+
+    <!-- OVERVIEW TAB -->
+    <div id="dtab-overview">
+      <div class="countdown-box">
+        <h3>⏰ Countdown to Your Big Day — March 15, 2026</h3>
+        <div class="countdown-nums">
+          <div class="cd-unit"><div class="cd-num" id="cd-d">107</div><div class="cd-lbl">Days</div></div>
+          <div class="cd-unit"><div class="cd-num" id="cd-h">14</div><div class="cd-lbl">Hours</div></div>
+          <div class="cd-unit"><div class="cd-num" id="cd-m">32</div><div class="cd-lbl">Min</div></div>
+          <div class="cd-unit"><div class="cd-num" id="cd-s">08</div><div class="cd-lbl">Sec</div></div>
+        </div>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(217,79,122,.1)">📋</div><div class="stat-card-num">6/9</div><div class="stat-card-lbl">Services Booked</div><div class="stat-card-change up">↑ 2 this week</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(201,149,42,.1)">💰</div><div class="stat-card-num">38,500</div><div class="stat-card-lbl">AED Spent</div><div class="stat-card-change">of 70,000 budget</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(0,168,150,.1)">👥</div><div class="stat-card-num">248/350</div><div class="stat-card-lbl">RSVPs Confirmed</div><div class="stat-card-change up">↑ 18 this week</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(5,150,105,.1)">💎</div><div class="stat-card-num">18,400</div><div class="stat-card-lbl">AED Saved by AI</div><div class="stat-card-change up">↑ Vs. avg. wedding</div></div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-widget">
+          <div class="dw-head"><span class="dw-title">📋 Booking Progress</span><span class="dw-action" onclick="showPage('vendors')">Add More</span></div>
+          <div class="progress-item"><div class="prog-label"><span>Wedding Hall</span><span style="color:var(--green)">✓ Booked</span></div><div class="prog-bar"><div class="prog-fill fill-rose" style="width:100%"></div></div></div>
+          <div class="progress-item"><div class="prog-label"><span>Catering</span><span style="color:var(--green)">✓ Booked</span></div><div class="prog-bar"><div class="prog-fill fill-rose" style="width:100%"></div></div></div>
+          <div class="progress-item"><div class="prog-label"><span>Photography</span><span style="color:var(--gold)">Deposit Paid</span></div><div class="prog-bar"><div class="prog-fill fill-gold" style="width:75%"></div></div></div>
+          <div class="progress-item"><div class="prog-label"><span>Decoration</span><span style="color:var(--teal)">In Discussion</span></div><div class="prog-bar"><div class="prog-fill fill-teal" style="width:50%"></div></div></div>
+          <div class="progress-item"><div class="prog-label"><span>Makeup Artist</span><span style="color:var(--rose)">30% Done</span></div><div class="prog-bar"><div class="prog-fill fill-purple" style="width:30%"></div></div></div>
+        </div>
+        <div class="dash-widget">
+          <div class="dw-head"><span class="dw-title">💰 Budget Tracker</span><span class="dw-action">View Details</span></div>
+          <div class="mini-bar-chart">
+            <div class="mb" style="height:90%;background:linear-gradient(var(--rose),var(--coral));opacity:.9;"></div>
+            <div class="mb" style="height:100%;background:linear-gradient(var(--rose),var(--coral));"></div>
+            <div class="mb" style="height:70%;background:linear-gradient(var(--gold),var(--gold-l));opacity:.8;"></div>
+            <div class="mb" style="height:85%;background:linear-gradient(var(--rose),var(--coral));opacity:.7;"></div>
+            <div class="mb" style="height:55%;background:linear-gradient(var(--gold),var(--gold-l));opacity:.6;"></div>
+            <div class="mb" style="height:35%;background:linear-gradient(var(--teal),var(--sky));opacity:.5;"></div>
+            <div class="mb" style="height:20%;background:var(--border);opacity:.4;"></div>
+            <div class="mb" style="height:15%;background:var(--border);opacity:.3;"></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-top:12px;font-size:.82rem;">
+            <span class="text-light">Spent: <strong style="color:var(--rose)">38,500 AED</strong></span>
+            <span class="text-light">Left: <strong style="color:var(--green)">31,500 AED</strong></span>
+          </div>
+        </div>
+        <div class="dash-widget" style="grid-column:1/-1">
+          <div class="dw-head"><span class="dw-title">📅 Recent Bookings</span><span class="dw-action" onclick="showPage('vendors')">Book More</span></div>
+          <div class="booking-list">
+            <div class="booking-item"><div class="bi-left"><div class="bi-name">🏛️ Grand Palazzo Dubai</div><div class="bi-sub">Wedding Hall · March 15, 2026 · 400 pax</div></div><span class="bi-status s-confirmed">✓ Confirmed</span></div>
+            <div class="booking-item"><div class="bi-left"><div class="bi-name">🍽️ Royal Feast Catering</div><div class="bi-sub">Catering · 350 guests · Multi-cuisine</div></div><span class="bi-status s-confirmed">✓ Confirmed</span></div>
+            <div class="booking-item"><div class="bi-left"><div class="bi-name">📸 Lumière Studios</div><div class="bi-sub">Photography & Video · Full day coverage</div></div><span class="bi-status s-pending">⏳ Deposit Paid</span></div>
+            <div class="booking-item"><div class="bi-left"><div class="bi-name">🌸 Bloom & Glam Decor</div><div class="bi-sub">Floral decoration · Romantic Rose theme</div></div><span class="bi-status s-discussion">💬 In Discussion</span></div>
+            <div class="booking-item"><div class="bi-left"><div class="bi-name">💄 Aisha Artistry</div><div class="bi-sub">Bridal makeup · HD + South Asian style</div></div><span class="bi-status s-discussion">💬 Shortlisted</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHECKLIST TAB -->
+    <div id="dtab-checklist" style="display:none;">
+      <div class="flex-between mb-20">
+        <h3 class="serif" style="font-size:1.3rem;font-weight:700;">Wedding Checklist <span class="text-light" style="font-size:.85rem;font-weight:400;">(12/28 completed)</span></h3>
+        <button class="btn btn-primary btn-sm" onclick="addCheckItem()">+ Add Task</button>
+      </div>
+      <div class="checklist-wrap" id="checklistWrap"></div>
+    </div>
+
+    <!-- GUESTS TAB -->
+    <div id="dtab-guests" style="display:none;">
+      <div class="flex-between mb-20 flex-wrap gap-12">
+        <div>
+          <h3 class="serif" style="font-size:1.3rem;font-weight:700;">Guest Manager</h3>
+          <p class="text-light" style="font-size:.85rem;">248 confirmed · 72 pending · 30 declined</p>
+        </div>
+        <div class="flex gap-8">
+          <button class="btn btn-secondary btn-sm" onclick="showToast('Import from CSV ready! 📂','success')">📂 Import CSV</button>
+          <button class="btn btn-primary btn-sm" onclick="showToast('Guest added! 👤','success')">+ Add Guest</button>
+        </div>
+      </div>
+      <div class="stat-cards mb-20">
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(5,150,105,.1)">✅</div><div class="stat-card-num">248</div><div class="stat-card-lbl">Confirmed</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(201,149,42,.1)">⏳</div><div class="stat-card-num">72</div><div class="stat-card-lbl">Pending RSVP</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(240,98,68,.1)">❌</div><div class="stat-card-num">30</div><div class="stat-card-lbl">Declined</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(217,79,122,.1)">🍽️</div><div class="stat-card-num">43</div><div class="stat-card-lbl">Special Dietary</div></div>
+      </div>
+      <div style="overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--border);">
+        <table class="guest-table">
+          <thead><tr><th>Name</th><th>Relation</th><th>RSVP</th><th>Table</th><th>Dietary</th><th>Actions</th></tr></thead>
+          <tbody id="guestTableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SEATING TAB -->
+    <div id="dtab-seating" style="display:none;">
+      <div class="flex-between mb-20">
+        <div><h3 class="serif" style="font-size:1.3rem;font-weight:700;">AI Seating Planner</h3><p class="text-light" style="font-size:.85rem;">Drag tables to rearrange · Click to assign guests · AI auto-optimizes family seating</p></div>
+        <button class="btn btn-primary btn-sm" onclick="showToast('AI is optimizing your seating arrangement! 🤖','success')">🤖 AI Auto-Arrange</button>
+      </div>
+      <div class="seating-canvas">
+        <div class="stage-box">🎵 Stage & Dance Floor 🎵</div>
+        <div class="tables-grid" id="seatingTables"></div>
+      </div>
+    </div>
+
+    <!-- PAYMENTS TAB -->
+    <div id="dtab-payments" style="display:none;">
+      <div class="flex-between mb-20"><h3 class="serif" style="font-size:1.3rem;font-weight:700;">Payment Tracker</h3><button class="btn btn-secondary btn-sm" onclick="showToast('Payment report downloaded! 📥','success')">📥 Export Report</button></div>
+      <div class="stat-cards mb-20">
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(5,150,105,.1)">✅</div><div class="stat-card-num">28,500</div><div class="stat-card-lbl">AED Paid</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(201,149,42,.1)">🔒</div><div class="stat-card-num">10,000</div><div class="stat-card-lbl">AED in Escrow</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(217,79,122,.1)">⏳</div><div class="stat-card-num">21,500</div><div class="stat-card-lbl">AED Remaining</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(109,40,217,.1)">📄</div><div class="stat-card-num">6</div><div class="stat-card-lbl">Contracts Signed</div></div>
+      </div>
+      <div class="dash-widget">
+        <div class="dw-head"><span class="dw-title">💳 Payment Schedule</span></div>
+        <div class="booking-list">
+          <div class="booking-item"><div class="bi-left"><div class="bi-name">🏛️ Grand Palazzo — Final Payment</div><div class="bi-sub">Due: Jan 15, 2026</div></div><span style="font-weight:700;color:var(--rose)">15,000 AED</span></div>
+          <div class="booking-item"><div class="bi-left"><div class="bi-name">🍽️ Royal Feast — Remaining</div><div class="bi-sub">Due: Feb 1, 2026</div></div><span style="font-weight:700;color:var(--gold)">8,400 AED</span></div>
+          <div class="booking-item"><div class="bi-left"><div class="bi-name">📸 Lumière Studios — Balance</div><div class="bi-sub">Due: March 10, 2026</div></div><span style="font-weight:700;color:var(--teal)">6,000 AED</span></div>
+          <div class="booking-item"><div class="bi-left"><div class="bi-name">🌸 Bloom & Glam — Deposit</div><div class="bi-sub">Due: Dec 20, 2025</div></div><span style="font-weight:700;color:var(--coral)">3,500 AED</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ANALYTICS TAB -->
+    <div id="dtab-analytics" style="display:none;">
+      <div class="sec-head" style="text-align:left;margin-bottom:24px;"><h3 class="serif" style="font-size:1.4rem;font-weight:700;">Wedding <span class="grad-text">Analytics</span></h3></div>
+      <div class="stat-cards mb-20">
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(5,150,105,.1)">💎</div><div class="stat-card-num grad-text">18,400</div><div class="stat-card-lbl">AED Saved vs Average</div><div class="stat-card-change up">↑ 26% below avg Dubai wedding</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(217,79,122,.1)">📊</div><div class="stat-card-num">54%</div><div class="stat-card-lbl">Budget Utilized</div><div class="stat-card-change">107 days to go</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(14,165,233,.1)">⭐</div><div class="stat-card-num">4.9</div><div class="stat-card-lbl">Avg Vendor Rating</div><div class="stat-card-change up">Top 5% in Dubai</div></div>
+        <div class="stat-card"><div class="stat-card-icon" style="background:rgba(201,149,42,.1)">🤖</div><div class="stat-card-num">94%</div><div class="stat-card-lbl">AI Budget Accuracy</div></div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-widget">
+          <div class="dw-head"><span class="dw-title">💰 Budget vs Similar Weddings</span></div>
+          <div style="font-size:.83rem;color:var(--mid);line-height:2;">
+            <div class="flex-between"><span>Your venue cost:</span><strong class="text-green">12,000 AED ✓ Below avg</strong></div>
+            <div class="flex-between"><span>Your catering/pax:</span><strong class="text-green">160 AED ✓ Fair price</strong></div>
+            <div class="flex-between"><span>Your photography:</span><strong class="text-gold">10,000 AED ≈ Market rate</strong></div>
+            <div class="flex-between"><span>Your decoration:</span><strong class="text-rose">9,500 AED ↑ Slight premium</strong></div>
+            <div class="divider"></div>
+            <div class="flex-between"><span><strong>Total savings vs avg:</strong></span><strong class="text-green" style="font-size:1.1rem;">18,400 AED 🎉</strong></div>
+          </div>
+        </div>
+        <div class="dash-widget">
+          <div class="dw-head"><span class="dw-title">📅 Completion Timeline</span></div>
+          <div style="font-size:.83rem;color:var(--mid);line-height:2.2;">
+            <div class="flex-between"><span>✅ Phase 1 — Venue & Catering</span><span class="text-green font-700">Done</span></div>
+            <div class="flex-between"><span>🔄 Phase 2 — Photography & Decor</span><span class="text-gold">In Progress</span></div>
+            <div class="flex-between"><span>⏳ Phase 3 — Beauty & Entertainment</span><span class="text-rose">Dec 2025</span></div>
+            <div class="flex-between"><span>⏳ Phase 4 — Final Details & Invites</span><span class="text-rose">Jan 2026</span></div>
+            <div class="flex-between"><span>🎊 Wedding Day!</span><span class="text-rose">Mar 15, 2026</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ VENDOR PORTAL PAGE ══════════ -->
+<div class="page" id="page-vendor-dash">
+  <div class="vendor-dash">
+    <div class="flex-between mb-24 flex-wrap gap-16">
+      <div>
+        <h2 class="serif" style="font-size:1.8rem;font-weight:900;">Vendor Portal — <span class="grad-text">Lumière Studios</span></h2>
+        <p class="text-light" style="font-size:.88rem;">Photography · Dubai Marina · Premium Verified ✅</p>
+      </div>
+      <div class="flex gap-8"><button class="btn btn-secondary btn-sm" onclick="showPage('home')">← Back</button><button class="btn btn-primary btn-sm" onclick="showToast('Profile updated! 🎉','success')">Save Changes</button></div>
+    </div>
+    <div class="dash-tabs mb-20">
+      <button class="dash-tab active" onclick="switchVendorTab(this,'v-overview')">Overview</button>
+      <button class="dash-tab" onclick="switchVendorTab(this,'v-verify')">Verification</button>
+      <button class="dash-tab" onclick="switchVendorTab(this,'v-portfolio')">Portfolio</button>
+      <button class="dash-tab" onclick="switchVendorTab(this,'v-analytics')">Analytics</button>
+      <button class="dash-tab" onclick="switchVendorTab(this,'v-pricing')">Pricing</button>
+    </div>
+
+    <!-- V OVERVIEW -->
+    <div id="vtab-v-overview">
+      <div class="analytics-grid">
+        <div class="analytics-card"><div class="ac-label">Profile Views This Month</div><div class="ac-value">2,847</div><div class="ac-change" style="color:var(--green)">↑ +23% vs last month</div><div class="ac-bar"><div class="ac-bar-fill" style="width:72%;background:linear-gradient(90deg,var(--rose),var(--coral));"></div></div></div>
+        <div class="analytics-card"><div class="ac-label">Inquiries Received</div><div class="ac-value">43</div><div class="ac-change" style="color:var(--green)">↑ +15% vs last month</div><div class="ac-bar"><div class="ac-bar-fill" style="width:58%;background:linear-gradient(90deg,var(--gold),var(--gold-l));"></div></div></div>
+        <div class="analytics-card"><div class="ac-label">Bookings Confirmed</div><div class="ac-value">12</div><div class="ac-change" style="color:var(--green)">↑ Conversion: 28%</div><div class="ac-bar"><div class="ac-bar-fill" style="width:45%;background:linear-gradient(90deg,var(--teal),var(--sky));"></div></div></div>
+        <div class="analytics-card"><div class="ac-label">Revenue This Month</div><div class="ac-value">142K AED</div><div class="ac-change" style="color:var(--green)">↑ Best month ever 🎉</div><div class="ac-bar"><div class="ac-bar-fill" style="width:88%;background:linear-gradient(90deg,var(--purple),#a855f7);"></div></div></div>
+      </div>
+      <div class="dash-grid">
+        <div class="dash-widget">
+          <div class="dw-head"><span class="dw-title">📅 Upcoming Bookings</span></div>
+          <div class="booking-list">
+            <div class="booking-item"><div class="bi-left"><div class="bi-name">Fatima & Ahmed Wedding</div><div class="bi-sub">March 15, 2026 · Full day</div></div><span class="bi-status s-confirmed">✓ Confirmed</span></div>
+            <div class="booking-item"><div class="bi-left"><div class="bi-name">Layla & Omar Wedding</div><div class="bi-sub">March 22, 2026 · Half day</div></div><span class="bi-status s-confirmed">✓ Confirmed</span></div>
+            <div class="booking-item"><div class="bi-left"><div class="bi-name">Priya & Rahul Wedding</div><div class="bi-sub">April 5, 2026 · Full day</div></div><span class="bi-status s-pending">⏳ Deposit Awaited</span></div>
+          </div>
+        </div>
+        <div class="dash-widget">
+          <div class="dw-head"><span class="dw-title">📊 AI Competitor Benchmarking</span></div>
+          <div style="overflow-x:auto;">
+            <table class="competitor-table">
+              <thead><tr><th>Metric</th><th>You</th><th>Market Avg</th></tr></thead>
+              <tbody>
+                <tr class="comp-you"><td>Price/day</td><td class="text-green">10,000 AED</td><td>11,200 AED</td></tr>
+                <tr><td>Response time</td><td class="text-green">2hrs</td><td>8hrs</td></tr>
+                <tr class="comp-you"><td>Rating</td><td class="text-green">4.8 ⭐</td><td>4.5 ⭐</td></tr>
+                <tr><td>Booking rate</td><td class="text-rose">28%</td><td class="text-green">34%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="ai-tip-box mt-12" style="font-size:.8rem;">💡 AI Tip: Improving response time to under 1 hour could increase your booking rate by ~18%</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- V VERIFY -->
+    <div id="vtab-v-verify" style="display:none;">
+      <div style="max-width:600px;">
+        <h3 class="serif mb-8" style="font-size:1.2rem;font-weight:700;">Vendor Verification Status</h3>
+        <p class="text-light mb-20" style="font-size:.87rem;">Complete all verification steps to earn the NikahHub Premium Verified badge and rank higher in search results.</p>
+        <div class="verify-step"><div class="verify-icon done">✅</div><div class="verify-text"><h4>UAE Trade License (DED)</h4><p>Business license verified via Dubai DED API. Expires: June 2026</p></div></div>
+        <div class="verify-step"><div class="verify-icon done">✅</div><div class="verify-text"><h4>Identity Verification</h4><p>Emirates ID or passport verified. Owner: Mohammed Al-Rashidi</p></div></div>
+        <div class="verify-step"><div class="verify-icon done">✅</div><div class="verify-text"><h4>Video Profile Complete</h4><p>60-second intro video uploaded and AI-reviewed for authenticity</p></div></div>
+        <div class="verify-step"><div class="verify-icon pending">⏳</div><div class="verify-text"><h4>Physical Address Verification</h4><p>Verification letter sent to Dubai Marina address. Expected: 3–5 days</p></div></div>
+        <div class="verify-step"><div class="verify-icon todo">○</div><div class="verify-text"><h4>Social Media Authenticity Check</h4><p>AI will verify your Instagram/TikTok followers are genuine. Connect accounts below.</p><button class="btn btn-secondary btn-sm mt-8" onclick="showToast('Social accounts connected! 🔗','success')">Connect Social Accounts</button></div></div>
+        <div class="verify-badge-lrg">✅ Premium Verified Badge — 3/5 Complete</div>
+      </div>
+    </div>
+
+    <!-- V PORTFOLIO -->
+    <div id="vtab-v-portfolio" style="display:none;">
+      <div class="flex-between mb-16"><h3 class="serif" style="font-size:1.1rem;font-weight:700;">Portfolio Gallery</h3><button class="btn btn-primary btn-sm" onclick="showToast('Photo uploaded! 📸','success')">+ Upload Photos</button></div>
+      <div class="portfolio-grid" id="portfolioGrid">
+        <div class="portfolio-item"><div class="portfolio-emoji">👰</div></div>
+        <div class="portfolio-item"><div class="portfolio-emoji">💍</div></div>
+        <div class="portfolio-item"><div class="portfolio-emoji">🌸</div></div>
+        <div class="portfolio-item"><div class="portfolio-emoji">🎊</div></div>
+        <div class="portfolio-item"><div class="portfolio-emoji">💑</div></div>
+        <div class="portfolio-item"><div class="portfolio-emoji">🏛️</div></div>
+        <div class="portfolio-item"><div class="portfolio-emoji">🌹</div></div>
+        <div class="portfolio-item" style="background:var(--rose-ll);cursor:pointer;" onclick="showToast('Photo uploaded! 📸','success')"><div class="portfolio-emoji" style="opacity:.4;">+</div></div>
+      </div>
+    </div>
+
+    <!-- V ANALYTICS -->
+    <div id="vtab-v-analytics" style="display:none;">
+      <div class="analytics-grid mb-20">
+        <div class="analytics-card"><div class="ac-label">Total Revenue (2025)</div><div class="ac-value">1.2M AED</div><div class="ac-change" style="color:var(--green)">↑ +42% YoY</div><div class="ac-bar"><div class="ac-bar-fill" style="width:85%;background:linear-gradient(90deg,var(--rose),var(--coral));"></div></div></div>
+        <div class="analytics-card"><div class="ac-label">Weddings Photographed</div><div class="ac-value">87</div><div class="ac-change" style="color:var(--green)">This year</div><div class="ac-bar"><div class="ac-bar-fill" style="width:70%;background:linear-gradient(90deg,var(--gold),var(--gold-l));"></div></div></div>
+        <div class="analytics-card"><div class="ac-label">Avg. Review Score</div><div class="ac-value">4.8 ⭐</div><div class="ac-change" style="color:var(--green)">From 204 reviews</div><div class="ac-bar"><div class="ac-bar-fill" style="width:96%;background:linear-gradient(90deg,var(--teal),var(--sky));"></div></div></div>
+        <div class="analytics-card"><div class="ac-label">AI Match Rank</div><div class="ac-value">#3</div><div class="ac-change">Top 3 in Photography</div><div class="ac-bar"><div class="ac-bar-fill" style="width:93%;background:linear-gradient(90deg,var(--purple),#a855f7);"></div></div></div>
+      </div>
+      <div class="dash-widget">
+        <div class="dw-head"><span class="dw-title">👥 Customer Demographics</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;font-size:.83rem;">
+          <div><div class="text-light mb-8">By Culture</div>
+            <div class="progress-item"><div class="prog-label"><span>Pakistani/Indian</span><span>42%</span></div><div class="prog-bar"><div class="prog-fill fill-rose" style="width:42%"></div></div></div>
+            <div class="progress-item"><div class="prog-label"><span>Arab</span><span>35%</span></div><div class="prog-bar"><div class="prog-fill fill-gold" style="width:35%"></div></div></div>
+            <div class="progress-item"><div class="prog-label"><span>Western</span><span>23%</span></div><div class="prog-bar"><div class="prog-fill fill-teal" style="width:23%"></div></div></div>
+          </div>
+          <div><div class="text-light mb-8">By Budget Range</div>
+            <div class="progress-item"><div class="prog-label"><span>50K–100K AED</span><span>48%</span></div><div class="prog-bar"><div class="prog-fill fill-rose" style="width:48%"></div></div></div>
+            <div class="progress-item"><div class="prog-label"><span>100K–200K</span><span>32%</span></div><div class="prog-bar"><div class="prog-fill fill-gold" style="width:32%"></div></div></div>
+            <div class="progress-item"><div class="prog-label"><span>200K+</span><span>20%</span></div><div class="prog-bar"><div class="prog-fill fill-teal" style="width:20%"></div></div></div>
+          </div>
+          <div><div class="text-light mb-8">By Location</div>
+            <div class="progress-item"><div class="prog-label"><span>Dubai</span><span>78%</span></div><div class="prog-bar"><div class="prog-fill fill-rose" style="width:78%"></div></div></div>
+            <div class="progress-item"><div class="prog-label"><span>Abu Dhabi</span><span>14%</span></div><div class="prog-bar"><div class="prog-fill fill-gold" style="width:14%"></div></div></div>
+            <div class="progress-item"><div class="prog-label"><span>Sharjah</span><span>8%</span></div><div class="prog-bar"><div class="prog-fill fill-teal" style="width:8%"></div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- V PRICING -->
+    <div id="vtab-v-pricing" style="display:none;">
+      <div style="max-width:600px;">
+        <h3 class="serif mb-8" style="font-size:1.1rem;font-weight:700;">Pricing & Packages</h3>
+        <p class="text-light mb-20" style="font-size:.87rem;">Set your pricing packages. AI will show fair price benchmarks and alert you when you're above/below market.</p>
+        <div class="ai-tip-box mb-20">💡 AI Benchmark: Photography packages in your category average <strong>9,500–12,000 AED</strong> for full day. Your pricing is within the fair range.</div>
+        <div class="dash-widget mb-16">
+          <div class="dw-head"><span class="dw-title">📦 Package: Essential</span><span class="dw-action" onclick="showToast('Package updated! ✅','success')">Edit</span></div>
+          <p style="font-size:.85rem;color:var(--mid);">8 hours coverage · 500 edited photos · Online gallery</p>
+          <div class="flex-between mt-12"><strong>8,000 AED</strong><span class="badge badge-green">✓ Fair Price</span></div>
+        </div>
+        <div class="dash-widget mb-16">
+          <div class="dw-head"><span class="dw-title">📦 Package: Premium</span><span class="dw-action" onclick="showToast('Package updated! ✅','success')">Edit</span></div>
+          <p style="font-size:.85rem;color:var(--mid);">Full day · 1000 photos · Drone · Wedding album · Highlights video</p>
+          <div class="flex-between mt-12"><strong>10,000 AED</strong><span class="badge badge-teal">✓ Market Rate</span></div>
+        </div>
+        <div class="dash-widget">
+          <div class="dw-head"><span class="dw-title">📦 Package: Elite Cinematic</span><span class="dw-action" onclick="showToast('Package updated! ✅','success')">Edit</span></div>
+          <p style="font-size:.85rem;color:var(--mid);">2 photographers · 4K cinematic film · Drone · Luxury album · Same-day reel</p>
+          <div class="flex-between mt-12"><strong>18,000 AED</strong><span class="badge badge-gold">⚠ Slightly above avg</span></div>
+        </div>
+        <button class="btn btn-primary mt-20 w-full" onclick="showToast('New package added! 📦','success')">+ Add Package</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ DEPLOY GUIDE PAGE ══════════ -->
+<div class="page" id="page-deploy">
+  <div style="padding:90px 5% 60px;">
+    <div class="flex-between mb-32 flex-wrap gap-16">
+      <div>
+        <h2 class="serif" style="font-size:2rem;font-weight:900;">🚀 Deploy NikahHub on <span class="grad-text">Vercel</span> — Free</h2>
+        <p class="text-light" style="font-size:.9rem;">Step-by-step guide from zero to live production in under 30 minutes</p>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="showPage('home')">← Back to App</button>
+    </div>
+
+    <div class="deploy-guide">
+
+      <!-- TECH STACK -->
+      <div class="dash-widget mb-32">
+        <div class="dw-head"><span class="dw-title">🛠️ Free Tech Stack for Full Production</span></div>
+        <div class="tech-stack-grid">
+          <div class="tech-card"><div class="tech-icon">⚡</div><div><div class="tech-name">Next.js 14</div><div class="tech-desc">Frontend + API Routes</div><div class="tech-free">✅ 100% Free on Vercel</div></div></div>
+          <div class="tech-card"><div class="tech-icon">🐘</div><div><div class="tech-name">Supabase</div><div class="tech-desc">Database + Auth + Storage</div><div class="tech-free">✅ 500MB free forever</div></div></div>
+          <div class="tech-card"><div class="tech-icon">💳</div><div><div class="tech-name">Stripe</div><div class="tech-desc">Payments + Escrow</div><div class="tech-free">✅ No monthly fee</div></div></div>
+          <div class="tech-card"><div class="tech-icon">🤖</div><div><div class="tech-name">Claude API</div><div class="tech-desc">AI Planner (Laila)</div><div class="tech-free">💰 Pay per use only</div></div></div>
+          <div class="tech-card"><div class="tech-icon">📧</div><div><div class="tech-name">Resend.com</div><div class="tech-desc">Email notifications</div><div class="tech-free">✅ 3K emails/month free</div></div></div>
+          <div class="tech-card"><div class="tech-icon">🖼️</div><div><div class="tech-name">Cloudinary</div><div class="tech-desc">Image + Video storage</div><div class="tech-free">✅ 25GB free</div></div></div>
+          <div class="tech-card"><div class="tech-icon">🌐</div><div><div class="tech-name">Vercel</div><div class="tech-desc">Hosting + CDN + SSL</div><div class="tech-free">✅ Free forever plan</div></div></div>
+          <div class="tech-card"><div class="tech-icon">📱</div><div><div class="tech-name">WhatsApp Business API</div><div class="tech-desc">AI chat in WhatsApp</div><div class="tech-free">💰 Low cost per msg</div></div></div>
+        </div>
+      </div>
+
+      <div class="ai-tip-box mb-32" style="font-size:.9rem;">🎯 <strong>This guide covers 2 paths:</strong> (A) Deploy this HTML file in 2 minutes, or (B) Build the full Next.js production app. Start with A to show clients, then build B for the real platform.</div>
+
+      <!-- OPTION A -->
+      <div style="background:linear-gradient(135deg,rgba(217,79,122,.04),rgba(201,149,42,.03));border:1px solid rgba(217,79,122,.15);border-radius:var(--r-xl);padding:28px;margin-bottom:32px;">
+        <h2 class="serif mb-4" style="font-size:1.4rem;font-weight:900;">Option A — Deploy HTML File <span class="badge badge-rose ml-8">⚡ 2 Minutes</span></h2>
+        <p class="text-light mb-20" style="font-size:.87rem;">Perfect for demos, investor pitches, and client presentations. Deploy this exact file live instantly.</p>
+        
+        <div class="deploy-step">
+          <div class="deploy-num">1</div>
+          <div class="deploy-content">
+            <h3>Download This File</h3>
+            <p>Save this HTML file as <code style="background:var(--cream);padding:2px 8px;border-radius:6px;font-size:.85rem;">index.html</code> to your computer.</p>
+            <button class="btn btn-primary btn-sm" onclick="showToast('File ready to download! Check your downloads folder 📁','success')">⬇️ Download nikah-hub.html</button>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">2</div>
+          <div class="deploy-content">
+            <h3>Create GitHub Account & Repository</h3>
+            <p>Go to <strong>github.com</strong> → Sign up free → Click "New Repository" → Name it <code style="background:var(--cream);padding:2px 8px;border-radius:6px;">nikah-hub</code> → Click "Create Repository".</p>
+            <div class="deploy-tip">💡 GitHub is where your code lives. Vercel connects directly to GitHub to deploy automatically.</div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">3</div>
+          <div class="deploy-content">
+            <h3>Upload File to GitHub</h3>
+            <p>On your new repository page, click "uploading an existing file" → Drag your <code style="background:var(--cream);padding:2px 8px;border-radius:6px;">index.html</code> → Click "Commit changes".</p>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">4</div>
+          <div class="deploy-content">
+            <h3>Connect to Vercel</h3>
+            <p>Go to <strong>vercel.com</strong> → "Sign up with GitHub" → "Add New Project" → Select your <code style="background:var(--cream);padding:2px 8px;border-radius:6px;">nikah-hub</code> repo → Framework: <strong>Other</strong> → Click <strong>Deploy</strong>.</p>
+            <div class="deploy-tip">🎉 That's it! In 30 seconds you'll have a live URL like <strong>nikah-hub.vercel.app</strong></div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">5</div>
+          <div class="deploy-content">
+            <h3>Add Custom Domain (Optional)</h3>
+            <p>In Vercel: Settings → Domains → Type <code style="background:var(--cream);padding:2px 8px;border-radius:6px;">nikahhub.ae</code> → Follow DNS instructions. Buy domain from Namecheap (~AED 50/year). Vercel provides <strong>free SSL automatically</strong>.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTION B -->
+      <div style="background:linear-gradient(135deg,rgba(0,168,150,.04),rgba(14,165,233,.03));border:1px solid rgba(0,168,150,.2);border-radius:var(--r-xl);padding:28px;margin-bottom:32px;">
+        <h2 class="serif mb-4" style="font-size:1.4rem;font-weight:900;">Option B — Full Production Next.js App <span class="badge badge-teal ml-8">🏗️ Recommended</span></h2>
+        <p class="text-light mb-20" style="font-size:.87rem;">Build the real production platform with database, auth, payments, and AI. Use this for actual launch.</p>
+
+        <div class="deploy-step">
+          <div class="deploy-num">1</div>
+          <div class="deploy-content">
+            <h3>Install Node.js & Create Project</h3>
+            <p>First install Node.js from nodejs.org. Then open Terminal (Mac) or Command Prompt (Windows):</p>
+            <div class="code-block">
+<span class="cmt"># Install Node.js first from nodejs.org</span>
+<span class="cmd">node --version</span>   <span class="cmt"># Should show v18 or higher</span>
+
+<span class="cmt"># Create the Next.js project</span>
+<span class="cmd">npx create-next-app@latest nikah-hub \
+  --typescript \
+  --tailwind \
+  --app \
+  --src-dir</span>
+
+<span class="cmt"># When prompted, answer:</span>
+<span class="str">Would you like to use ESLint? → Yes
+Would you like to customize import alias? → No</span>
+
+<span class="cmd">cd nikah-hub</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">2</div>
+          <div class="deploy-content">
+            <h3>Install All Required Packages</h3>
+            <div class="code-block">
+<span class="cmt"># Core dependencies</span>
+<span class="cmd">npm install @supabase/supabase-js @supabase/auth-helpers-nextjs</span>
+<span class="cmd">npm install stripe @stripe/stripe-js</span>
+<span class="cmd">npm install @anthropic-ai/sdk</span>
+<span class="cmd">npm install resend</span>
+<span class="cmd">npm install cloudinary</span>
+<span class="cmd">npm install date-fns</span>
+<span class="cmd">npm install react-hot-toast</span>
+<span class="cmd">npm install framer-motion</span>
+<span class="cmd">npm install react-datepicker</span>
+<span class="cmd">npm install zustand</span>   <span class="cmt"># State management</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">3</div>
+          <div class="deploy-content">
+            <h3>Project Folder Structure</h3>
+            <div class="code-block">
+nikah-hub/
+├── src/
+│   ├── app/
+│   │   ├── page.tsx                <span class="cmt"># Landing page</span>
+│   │   ├── dashboard/page.tsx      <span class="cmt"># Couple dashboard</span>
+│   │   ├── vendors/page.tsx        <span class="cmt"># Vendor listings</span>
+│   │   ├── vendor-portal/page.tsx  <span class="cmt"># Vendor dashboard</span>
+│   │   ├── booking/[id]/page.tsx   <span class="cmt"># Booking flow</span>
+│   │   ├── invite/[id]/page.tsx    <span class="cmt"># Digital invite</span>
+│   │   └── api/
+│   │       ├── ai-planner/route.ts <span class="cmt"># Claude AI API</span>
+│   │       ├── bookings/route.ts   <span class="cmt"># CRUD bookings</span>
+│   │       ├── payments/route.ts   <span class="cmt"># Stripe webhooks</span>
+│   │       ├── vendors/route.ts    <span class="cmt"># Vendor CRUD</span>
+│   │       ├── guests/route.ts     <span class="cmt"># Guest manager</span>
+│   │       └── contracts/route.ts  <span class="cmt"># PDF generation</span>
+│   ├── components/
+│   │   ├── ChatWidget.tsx
+│   │   ├── VendorCard.tsx
+│   │   ├── BudgetSlider.tsx
+│   │   ├── BookingModal.tsx
+│   │   ├── SeatingChart.tsx
+│   │   ├── GuestTable.tsx
+│   │   ├── InviteBuilder.tsx
+│   │   └── CountdownTimer.tsx
+│   └── lib/
+│       ├── supabase.ts
+│       ├── stripe.ts
+│       ├── claude.ts
+│       └── utils.ts
+├── .env.local                      <span class="cmt"># Your secret keys</span>
+└── package.json
+            </div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">4</div>
+          <div class="deploy-content">
+            <h3>Setup Supabase Database (Free)</h3>
+            <p>Go to <strong>supabase.com</strong> → Create free account → New Project → Name: "nikah-hub" → Copy your API keys. Then run this SQL in Supabase SQL Editor:</p>
+            <div class="code-block">
+<span class="cmt">-- Users table</span>
+<span class="cmd">create table users (
+  id uuid primary key default uuid_generate_v4(),
+  email text unique not null,
+  name text,
+  role text default 'couple', <span class="cmt">-- couple | vendor | admin</span>
+  wedding_date date,
+  budget integer,
+  guest_count integer,
+  culture text,
+  theme text,
+  created_at timestamptz default now()
+);</span>
+
+<span class="cmt">-- Vendors table</span>
+<span class="cmd">create table vendors (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid references users(id),
+  business_name text not null,
+  category text not null,
+  description text,
+  price_min integer,
+  price_max integer,
+  location text,
+  rating decimal(3,2) default 0,
+  review_count integer default 0,
+  verified boolean default false,
+  availability jsonb,
+  created_at timestamptz default now()
+);</span>
+
+<span class="cmt">-- Bookings table</span>
+<span class="cmd">create table bookings (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid references users(id),
+  vendor_id uuid references vendors(id),
+  event_date date,
+  status text default 'pending',
+  deposit_amount integer,
+  total_amount integer,
+  contract_url text,
+  created_at timestamptz default now()
+);</span>
+
+<span class="cmt">-- Guests table</span>
+<span class="cmd">create table guests (
+  id uuid primary key default uuid_generate_v4(),
+  user_id uuid references users(id),
+  name text not null,
+  relation text,
+  rsvp_status text default 'pending',
+  table_number integer,
+  dietary text,
+  phone text,
+  email text
+);</span>
+
+<span class="cmt">-- Reviews table</span>
+<span class="cmd">create table reviews (
+  id uuid primary key default uuid_generate_v4(),
+  booking_id uuid references bookings(id),
+  user_id uuid references users(id),
+  vendor_id uuid references vendors(id),
+  rating integer check (rating between 1 and 5),
+  comment text,
+  ai_verified boolean default false,
+  created_at timestamptz default now()
+);</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">5</div>
+          <div class="deploy-content">
+            <h3>Create Environment Variables File</h3>
+            <p>Create a file called <code style="background:var(--cream);padding:2px 8px;border-radius:6px;">.env.local</code> in your project root:</p>
+            <div class="code-block">
+<span class="cmt"># Supabase (from supabase.com → Project Settings → API)</span>
+<span class="str">NEXT_PUBLIC_SUPABASE_URL=https://xxxxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI...</span>
+
+<span class="cmt"># Stripe (from stripe.com → Developers → API Keys)</span>
+<span class="str">NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_...
+STRIPE_SECRET_KEY=sk_live_...
+STRIPE_WEBHOOK_SECRET=whsec_...</span>
+
+<span class="cmt"># Claude AI (from console.anthropic.com)</span>
+<span class="str">ANTHROPIC_API_KEY=sk-ant-...</span>
+
+<span class="cmt"># Resend Email (from resend.com)</span>
+<span class="str">RESEND_API_KEY=re_...</span>
+
+<span class="cmt"># Cloudinary (from cloudinary.com)</span>
+<span class="str">NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=123456789
+CLOUDINARY_API_SECRET=abc123...</span>
+
+<span class="cmt"># App URL</span>
+<span class="str">NEXT_PUBLIC_APP_URL=https://nikahhub.ae</span>
+            </div>
+            <div class="deploy-tip">⚠️ NEVER commit .env.local to GitHub. Add it to .gitignore immediately!</div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">6</div>
+          <div class="deploy-content">
+            <h3>Build the AI Planner API Route</h3>
+            <p>Create <code style="background:var(--cream);padding:2px 8px;border-radius:6px;">src/app/api/ai-planner/route.ts</code>:</p>
+            <div class="code-block">
+<span class="cmd">import Anthropic from '@anthropic-ai/sdk';
+import { NextRequest, NextResponse } from 'next/server';
+
+const client = new Anthropic();
+
+export async function POST(req: NextRequest) {
+  const { messages, budget, guests, culture } = await req.json();
+  
+  const response = await client.messages.create({
+    model: 'claude-sonnet-4-6',
+    max_tokens: 1024,
+    system: `You are Laila, an expert AI wedding planner for Dubai.
+    You know Dubai vendors, pricing, seasons, and cultural customs.
+    Current user: Budget ${budget} AED, ${guests} guests, ${culture} wedding.
+    Always respond in the same language the user writes in.
+    Be warm, specific, and actionable. Include AED prices.`,
+    messages: messages,
+  });
+
+  return NextResponse.json({ 
+    reply: response.content[0].text 
+  });
+}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">7</div>
+          <div class="deploy-content">
+            <h3>Push to GitHub</h3>
+            <div class="code-block">
+<span class="cmt"># Initialize git in your project</span>
+<span class="cmd">git init
+git add .
+git commit -m "🎊 Initial NikahHub commit"</span>
+
+<span class="cmt"># Create repo on github.com, then:</span>
+<span class="cmd">git remote add origin https://github.com/YOUR_USERNAME/nikah-hub.git
+git branch -M main
+git push -u origin main</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">8</div>
+          <div class="deploy-content">
+            <h3>Deploy to Vercel</h3>
+            <div class="code-block">
+<span class="cmt"># Option 1: Vercel CLI (fastest)</span>
+<span class="cmd">npm install -g vercel
+vercel login
+vercel</span>   <span class="cmt"># Follow prompts, choose your GitHub repo</span>
+
+<span class="cmt"># Option 2: Vercel Dashboard</span>
+<span class="str">1. Go to vercel.com → Login with GitHub
+2. Click "Add New Project"
+3. Import your nikah-hub repo
+4. Add all .env.local variables in "Environment Variables" section
+5. Click Deploy → Done in ~60 seconds! ✅</span>
+            </div>
+            <div class="deploy-tip">🎉 Every time you push to GitHub, Vercel auto-deploys! No manual work needed ever again.</div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">9</div>
+          <div class="deploy-content">
+            <h3>Add Custom Domain</h3>
+            <div class="code-block">
+<span class="cmt"># In Vercel Dashboard:</span>
+<span class="str">Project → Settings → Domains → Add Domain
+Type: nikahhub.ae
+</span>
+<span class="cmt"># Then at your domain registrar (Namecheap/GoDaddy):</span>
+<span class="str">Add DNS Record:
+  Type: CNAME
+  Name: @
+  Value: cname.vercel-dns.com
+</span>
+<span class="cmt"># Vercel auto-provisions SSL certificate — FREE 🔒</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="deploy-step">
+          <div class="deploy-num">10</div>
+          <div class="deploy-content">
+            <h3>Setup Stripe Webhooks</h3>
+            <div class="code-block">
+<span class="cmt"># Install Stripe CLI</span>
+<span class="cmd">npm install stripe --save</span>
+
+<span class="cmt"># In Stripe Dashboard → Developers → Webhooks → Add endpoint:</span>
+<span class="str">Endpoint URL: https://nikahhub.ae/api/payments/webhook
+Events to listen: 
+  - payment_intent.succeeded
+  - payment_intent.payment_failed
+  - charge.refunded</span>
+
+<span class="cmt"># Copy the webhook secret to your Vercel env variables</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TIMELINE -->
+      <div class="dash-widget mb-24">
+        <div class="dw-head"><span class="dw-title">🗓️ Realistic Build Timeline</span></div>
+        <div class="milestone-list">
+          <div class="milestone"><div class="m-week">Day 1</div><div class="m-text">🚀 Deploy HTML file to Vercel. Show clients. Get feedback. Buy domain.</div></div>
+          <div class="milestone"><div class="m-week">Week 1</div><div class="m-text">⚡ Setup Next.js + Supabase + Auth. Build vendor listing + search page.</div></div>
+          <div class="milestone"><div class="m-week">Week 2</div><div class="m-text">🤖 Integrate Claude API for Laila AI planner. Build booking flow + Stripe payments.</div></div>
+          <div class="milestone"><div class="m-week">Week 3</div><div class="m-text">📊 Build couple dashboard + checklist + guest manager + countdown.</div></div>
+          <div class="milestone"><div class="m-week">Week 4</div><div class="m-text">💼 Build vendor portal + analytics + verification system + portfolio.</div></div>
+          <div class="milestone"><div class="m-week">Week 5</div><div class="m-text">🌐 Wedding website builder + digital invitations + RSVP system.</div></div>
+          <div class="milestone"><div class="m-week">Week 6</div><div class="m-text">🧪 Testing, bug fixes, onboard first 10 real vendors. Soft launch!</div></div>
+          <div class="milestone"><div class="m-week">Month 2</div><div class="m-text">📱 WhatsApp Business API integration. iOS/Android app (React Native). Marketing.</div></div>
+          <div class="milestone"><div class="m-week">Month 3</div><div class="m-text">💰 Revenue model live: vendor subscriptions + booking commission. Scale!</div></div>
+        </div>
+      </div>
+
+      <!-- COST -->
+      <div class="dash-widget">
+        <div class="dw-head"><span class="dw-title">💰 Monthly Cost to Run NikahHub</span></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;font-size:.85rem;">
+          <div>
+            <div class="text-light mb-12" style="font-weight:700;font-size:.8rem;">FREE TIER (First ~6 months)</div>
+            <div class="booking-list">
+              <div class="booking-item"><span>Vercel Hosting</span><strong class="text-green">Free</strong></div>
+              <div class="booking-item"><span>Supabase DB (500MB)</span><strong class="text-green">Free</strong></div>
+              <div class="booking-item"><span>Supabase Auth (50K users)</span><strong class="text-green">Free</strong></div>
+              <div class="booking-item"><span>Cloudinary (25GB)</span><strong class="text-green">Free</strong></div>
+              <div class="booking-item"><span>Resend (3K emails/mo)</span><strong class="text-green">Free</strong></div>
+              <div class="booking-item"><span>Stripe (no monthly fee)</span><strong class="text-green">Free + 2.9%</strong></div>
+              <div class="booking-item"><span>Domain (nikahhub.ae)</span><strong class="text-gold">~AED 50/year</strong></div>
+            </div>
+          </div>
+          <div>
+            <div class="text-light mb-12" style="font-weight:700;font-size:.8rem;">PAID (After growth)</div>
+            <div class="booking-list">
+              <div class="booking-item"><span>Claude API (AI Planner)</span><strong class="text-rose">~$50–200/mo</strong></div>
+              <div class="booking-item"><span>Supabase Pro</span><strong class="text-rose">$25/mo</strong></div>
+              <div class="booking-item"><span>Vercel Pro (if needed)</span><strong class="text-rose">$20/mo</strong></div>
+              <div class="booking-item"><span>WhatsApp Business API</span><strong class="text-rose">~$0.05/msg</strong></div>
+              <div class="booking-item"><span>PayTabs UAE</span><strong class="text-rose">2.75% + AED 1</strong></div>
+            </div>
+            <div class="ai-tip-box mt-12" style="font-size:.78rem;">💡 Total running cost: Nearly AED 0 until you have real users. Only pay as you scale!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BOOKING MODAL ═══ -->
+<div class="modal-overlay" id="bookingModal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal('bookingModal')">✕</button>
+    <div class="modal-title">Book Your Vendor 📅</div>
+    <div class="modal-sub">Real-time availability · Instant contract · Escrow-protected payment</div>
+    <div class="steps-indicator">
+      <div class="step-dot-wrap active" id="bstep-1"><div class="step-dot">1</div><div class="step-dot-lbl">Details</div></div>
+      <div class="step-dot-wrap" id="bstep-2"><div class="step-dot">2</div><div class="step-dot-lbl">Date</div></div>
+      <div class="step-dot-wrap" id="bstep-3"><div class="step-dot">3</div><div class="step-dot-lbl">Payment</div></div>
+      <div class="step-dot-wrap" id="bstep-4"><div class="step-dot">4</div><div class="step-dot-lbl">Confirm</div></div>
+    </div>
+    <div class="form-group"><label>Bride & Groom Names</label><input type="text" class="form-control" placeholder="e.g. Fatima & Ahmed" id="bookingNames"></div>
+    <div class="form-group"><label>Wedding Date</label><input type="date" class="form-control" id="bookingDate"></div>
+    <div class="form-group"><label>Guest Count</label><select class="form-control"><option>Under 100 guests</option><option>100–200 guests</option><option>200–350 guests</option><option>350–500 guests</option><option>500+ guests</option></select></div>
+    <div class="form-group"><label>Special Requirements</label><textarea class="form-control" rows="2" placeholder="Cultural requirements, theme preferences, special requests..."></textarea></div>
+    <div class="escrow-notice">🔒 <span><strong>NikahHub Escrow Protection:</strong> Your deposit is held securely. The vendor only receives payment after your event is successfully delivered. Full dispute resolution available within 30 days.</span></div>
+    <div class="form-group"><label>Select Payment Method</label></div>
+    <div class="payment-methods">
+      <div class="pay-method sel" onclick="selectPay(this)"><span class="pm-logo">💳</span>Credit Card (Stripe)</div>
+      <div class="pay-method" onclick="selectPay(this)"><span class="pm-logo">🏦</span>PayTabs</div>
+      <div class="pay-method" onclick="selectPay(this)"><span class="pm-logo">🛒</span>Tabby (BNPL)</div>
+      <div class="pay-method" onclick="selectPay(this)"><span class="pm-logo">💰</span>Tamara</div>
+    </div>
+    <div class="contract-preview">
+      <h5>📋 AI-Generated Contract Preview</h5>
+      <strong>SERVICE AGREEMENT — NikahHub Platform</strong><br>
+      Vendor: Grand Palazzo Dubai · Service: Wedding Hall · Date: [TBD]<br>
+      Terms: 30% deposit to confirm. Balance due 7 days before event.<br>
+      Cancellation: Full refund if cancelled 90+ days prior. 50% refund if 30–90 days.<br>
+      Dispute resolution: NikahHub escrow team. Governed by UAE law.
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal('bookingModal')" style="flex:1">Cancel</button>
+      <button class="btn btn-primary" style="flex:2" onclick="confirmBooking()">Proceed → Pay 30% Deposit</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ VENDOR DETAIL MODAL ═══ -->
+<div class="modal-overlay" id="vendorModal">
+  <div class="modal-box" style="max-width:620px;">
+    <button class="modal-close" onclick="closeModal('vendorModal')">✕</button>
+    <div id="vendorModalContent"></div>
+  </div>
+</div>
+
+<!-- ═══ TOAST CONTAINER ═══ -->
+<div id="toast"></div>
+
+<!-- ═══ WHATSAPP BUTTON ═══ -->
+<div id="wa-btn" title="Chat with Laila on WhatsApp" onclick="showToast('Opening WhatsApp AI Planner... 📱','success')">💬</div>
+<script>
+// ═══════════════════════════════════════
+// PAGE ROUTER
+// ═══════════════════════════════════════
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.remove('active'));
+  const nl = document.getElementById('nl-'+{'home':'home','vendors':'vendors','dashboard':'dash','vendor-dash':'vdash','deploy':'deploy'}[name]);
+  if(nl) nl.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  if(name==='vendors') renderVendors();
+  if(name==='dashboard') { renderChecklist(); renderGuests(); renderSeating(); startCountdown(); }
+}
+
+// ═══════════════════════════════════════
+// NAVBAR SCROLL
+// ═══════════════════════════════════════
+window.addEventListener('scroll',()=>{
+  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>20);
+});
+
+// ═══════════════════════════════════════
+// MOBILE MENU
+// ═══════════════════════════════════════
+function toggleMobileMenu(){
+  const nl = document.querySelector('.nav-links');
+  nl.style.display = nl.style.display==='flex'?'none':'flex';
+  nl.style.flexDirection='column';
+  nl.style.position='fixed';
+  nl.style.top='66px';nl.style.left='0';nl.style.right='0';
+  nl.style.background='white';nl.style.padding='20px';nl.style.borderBottom='1px solid #EDD9C8';
+  nl.style.zIndex='999';
+}
+
+// ═══════════════════════════════════════
+// TOAST NOTIFICATIONS
+// ═══════════════════════════════════════
+function showToast(msg, type='info') {
+  const container = document.getElementById('toast');
+  const el = document.createElement('div');
+  el.className = 'toast-item' + (type==='success'?' success':type==='warning'?' warning':'');
+  el.innerHTML = (type==='success'?'✅ ':type==='warning'?'⚠️ ':'ℹ️ ') + msg;
+  container.appendChild(el);
+  setTimeout(()=>el.remove(), 3500);
+}
+
+// ═══════════════════════════════════════
+// AI CHAT LOGIC
+// ═══════════════════════════════════════
+const chatFlow = [
+  {triggers:['3–6','6–12','1+ year','over 1','already'],reply:"Perfect! 🗓️ And what's your total budget for the wedding?",opts:['Under 30K AED','30K–60K AED','60K–100K AED','100K–200K AED','200K+ AED']},
+  {triggers:['30k','30,000','aed','under 30','60k','100k','200k'],reply:"Wonderful! How many guests are you expecting? This affects venue and catering costs significantly.",opts:['Under 100 guests','100–200 guests','200–350 guests','350–500 guests','500+ guests']},
+  {triggers:['100','200','350','500','guests','under'],reply:"Great! Which cultural style best describes your wedding?",opts:['Pakistani / South Asian','Indian / Hindu','Arab / Gulf','Western / European','Mixed / Fusion']},
+  {triggers:['pakistani','indian','arab','western','mixed','south','hindu','gulf','fusion','european'],reply:`🎉 Perfect! Based on your details, here's your AI-generated wedding plan:\n\n🏛️ <strong>Venue (Hall):</strong> 3 options, 8,000–18,000 AED\n🍽️ <strong>Catering:</strong> 140–180 AED/pax (estimated 16,000–25,000 AED)\n📸 <strong>Photography:</strong> 8,000–12,000 AED\n🌸 <strong>Decoration:</strong> 7,000–15,000 AED\n💄 <strong>Makeup:</strong> 2,500–5,000 AED\n\n💡 <strong>AI Optimization:</strong> Book in January for 20% savings!\n🤖 <strong>Top Suggestion:</strong> Grand Palazzo Dubai — 98% match for your profile\n\nWould you like to see matched vendors?`,opts:['Yes! Show me vendors 🏢','Adjust my budget 💰','See full breakdown 📊','Download my plan 📄']},
+  {triggers:['yes','show','vendor','adjust','download','see','full'],reply:"Excellent! I've found 12 perfect vendors matched to your profile. Head to the Vendors page to see all AI-matched results with compatibility scores! I've also added them to your dashboard. 🎊",opts:['Go to Vendors →','Open My Dashboard →','Ask me another question']},
+];
+
+let chatStepIndex = 0;
+function chatOpt(btn, text) {
+  btn.parentElement.querySelectorAll('.opt').forEach(b=>b.classList.remove('sel'));
+  btn.classList.add('sel');
+  setTimeout(()=>addUserMsg(text), 150);
+  setTimeout(()=>showTyping(()=>processChat(text)), 700);
+}
+function sendChat() {
+  const input = document.getElementById('chatInput');
+  const val = input.value.trim();
+  if(!val) return;
+  addUserMsg(val);
+  input.value='';
+  showTyping(()=>processChat(val));
+}
+function addUserMsg(text) {
+  const msgs = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className='msg-row user';
+  d.innerHTML=`<div class="msg-ava">👤</div><div class="msg-bubble">${text}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function showTyping(callback) {
+  const msgs = document.getElementById('chatMsgs');
+  const wrap = document.createElement('div');
+  wrap.className='msg-row ai';
+  wrap.id='typing-indicator';
+  wrap.innerHTML=`<div class="msg-ava">💎</div><div class="chat-typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+  msgs.appendChild(wrap);
+  msgs.scrollTop=msgs.scrollHeight;
+  setTimeout(()=>{
+    const ti = document.getElementById('typing-indicator');
+    if(ti) ti.remove();
+    callback();
+  }, 1400);
+}
+function addAiMsg(text, opts=[]) {
+  const msgs = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className='msg-row ai';
+  let optsHtml = opts.length ? `<div class="opts-row">${opts.map(o=>`<button class="opt" onclick="chatOpt(this,'${o}')">${o}</button>`).join('')}</div>` : '';
+  d.innerHTML=`<div class="msg-ava">💎</div><div><div class="msg-bubble">${text.replace(/\n/g,'<br>')}</div>${optsHtml}</div>`;
+  msgs.appendChild(d);
+  msgs.scrollTop=msgs.scrollHeight;
+}
+function processChat(input) {
+  const lc = input.toLowerCase();
+  const match = chatFlow.find(f=>f.triggers.some(t=>lc.includes(t.toLowerCase())));
+  if(match) { addAiMsg(match.reply, match.opts||[]); }
+  else { addAiMsg("Bohat shukriya! 🤖 Main aapke liye perfect vendors dhoond rahi hoon... Please wait while I analyze 2,400+ Dubai vendors for your profile. You can also browse vendors directly or share more details about your vision!", ['Show me Vendors →','Tell me more about my budget','What makes a great Dubai wedding?']); }
+}
+
+// ═══════════════════════════════════════
+// BUDGET CALCULATOR
+// ═══════════════════════════════════════
+const budgetItems = [
+  {icon:'🏛️',name:'Wedding Hall / Venue',pct:.27},
+  {icon:'🍽️',name:'Catering & Food',pct:.29},
+  {icon:'📸',name:'Photography & Videography',pct:.15},
+  {icon:'🌸',name:'Decoration & Florals',pct:.12},
+  {icon:'💄',name:'Makeup & Beauty',pct:.06},
+  {icon:'👗',name:'Bridal Wear & Groom Attire',pct:.05},
+  {icon:'🎵',name:'Entertainment & DJ',pct:.03},
+  {icon:'💌',name:'Invitations & Stationery',pct:.02},
+  {icon:'🎁',name:'Favors & Miscellaneous',pct:.01},
+];
+const aiTips = {
+  25000:"For budgets under 30K, consider a Friday morning ceremony — venues cost 35% less than evenings. Sharjah venues are excellent quality at 40% of Dubai prices.",
+  50000:"At 50K AED, consider January or February dates — 20% cheaper than November/December. Allocate 30% to catering as guests always remember the food!",
+  100000:"Great budget! Prioritize venue and photography — these create the most lasting memories. Consider a palace hotel for the wow factor within this range.",
+  200000:"Premium budget! You can afford Atlantis, Armani Hotel, or Burj Al Arab venues. Allocate extra to entertainment — a live Arabic band transforms the atmosphere.",
+};
+const optimizerSuggestions = {
+  25000:["Book a Tuesday–Thursday wedding for 40% venue savings","Use Sharjah-based vendors — same quality, 35% cheaper","Choose seasonal flowers (available in winter) — saves 25% on florals","Book catering with guest minimum for bulk pricing discounts"],
+  50000:["January & February dates save 18–22% across all vendor categories","Book photography + videography as a bundle — saves 15–20%","Off-peak time (before 8PM) reduces hall rental significantly","Consider a cocktail-style reception — reduces catering cost by 20%"],
+  100000:["Negotiate 3+ vendor packages together for 10–15% combined discount","Hire a day-of coordinator from NikahHub — saves 5–8% through vendor connections","Pre-book honeymoon through NikahHub for exclusive couple discounts"],
+  200000:["Exclusive venue buyout guarantees privacy and premium service","Invest in a same-day edit video reel — priceless memory at ~2% of budget","Consider a separate Henna/Mehndi night — creates amazing content and memories"],
+};
+function updateBudget(val) {
+  const v = parseInt(val);
+  document.getElementById('budgetVal').textContent = Number(v).toLocaleString()+' AED';
+  const pct = ((v-20000)/(250000-20000))*100;
+  document.getElementById('budgetRange').style.background = `linear-gradient(to right,var(--rose) 0%,var(--rose) ${pct}%,var(--border) ${pct}%,var(--border) 100%)`;
+  const grid = document.getElementById('budgetGrid');
+  grid.innerHTML = budgetItems.map(item=>{
+    const amt = Math.round(v*item.pct);
+    const p = Math.round(item.pct*100);
+    return `<div class="budget-row">
+      <div class="budget-row-icon">${item.icon}</div>
+      <div class="budget-row-info">
+        <div class="budget-row-name">${item.name}</div>
+        <div class="budget-row-amt">${amt.toLocaleString()} AED</div>
+      </div>
+      <div class="budget-bar-bg"><div class="budget-bar-fill" style="width:${Math.min(100,p*4)}%"></div></div>
+      <div class="budget-pct">${p}%</div>
+    </div>`;
+  }).join('');
+  const tk = v<=35000?25000:v<=75000?50000:v<=150000?100000:200000;
+  document.getElementById('aiTipBox').innerHTML = '💡 <strong>AI Tip:</strong> ' + aiTips[tk];
+  const ol = document.getElementById('optimizerList');
+  ol.innerHTML = (optimizerSuggestions[tk]||optimizerSuggestions[50000]).map(s=>`<div class="suggestion-item">${s}</div>`).join('');
+}
+// Initialize on load
+document.addEventListener('DOMContentLoaded',()=>{ updateBudget(50000); renderVendors(); renderChecklist(); renderGuests(); renderSeating(); startCountdown(); });
+
+// ═══════════════════════════════════════
+// VENDOR DATA & RENDERING
+// ═══════════════════════════════════════
+const vendors = [
+  {id:1,name:'Grand Palazzo Dubai',cat:'Wedding Halls',icon:'🏛️',bg:'rgba(217,79,122,.1)',price:'12,000–28,000',rating:'4.9',reviews:312,match:98,loc:'Palm Jumeirah',tags:['500 pax','Ballroom','Sea View'],bench:'Fair Price',culture:'All',verified:true,desc:'5-star luxury ballroom with panoramic sea views. Capacity 50–500 guests. In-house catering option available.'},
+  {id:2,name:'Lumière Studios',cat:'Photography',icon:'📸',bg:'rgba(201,149,42,.12)',price:'8,000–15,000',rating:'4.8',reviews:204,match:95,loc:'Dubai Marina',tags:['Drone','Arabic Style','Album'],bench:'Below Market',culture:'All',verified:true,desc:'Award-winning photography team. Specialists in South Asian and Arab weddings. 4K cinematic films included.'},
+  {id:3,name:'Bloom & Glam Decor',cat:'Decoration',icon:'🌸',bg:'rgba(0,168,150,.1)',price:'6,000–18,000',rating:'4.9',reviews:178,match:92,loc:'Downtown Dubai',tags:['Floral','Luxury','Custom'],bench:'Fair Price',culture:'Pakistani/Indian',verified:true,desc:'Dubai top-ranked decorator. Specializes in lush floral arches, palace-style reception decor, and intimate garden setups.'},
+  {id:4,name:'Aisha Artistry',cat:'Makeup Artists',icon:'💄',bg:'rgba(124,58,237,.1)',price:'2,500–6,000',rating:'5.0',reviews:96,match:90,loc:'Jumeirah',tags:['HD Makeup','South Asian','Airbrush'],bench:'Fair Price',culture:'Pakistani/Indian',verified:true,desc:'Celebrity makeup artist trained in Mumbai & London. 500+ brides transformed. Specialists in South Asian bridal looks.'},
+  {id:5,name:'Royal Feast Catering',cat:'Catering',icon:'🍽️',bg:'rgba(255,107,107,.1)',price:'160–340 AED/pax',rating:'4.7',reviews:430,match:88,loc:'Dubai',tags:['Multi-cuisine','Live Station','Halal'],bench:'Fair Price',culture:'All',verified:true,desc:'Catered 400+ weddings in Dubai. Live cooking stations, international buffets, Arabic mezze, Pakistani specialties. All halal certified.'},
+  {id:6,name:'Zara Bridal Couture',cat:'Bridal Wear',icon:'👗',bg:'rgba(217,79,122,.08)',price:'4,000–25,000',rating:'4.8',reviews:88,match:85,loc:'Deira',tags:['Custom','Lehenga','Gown','Sharara'],bench:'Market Rate',culture:'Pakistani/Indian',verified:true,desc:'Custom bridal wear from Pakistan\'s top designers. Lehengas, sarees, gharara, and fusion gowns. 6–8 week delivery.'},
+  {id:7,name:'Emirates Wedding Films',cat:'Videography',icon:'🎥',bg:'rgba(14,165,233,.1)',price:'6,000–14,000',rating:'4.7',reviews:142,match:83,loc:'Dubai Marina',tags:['Cinematic','4K','Drone','SDE'],bench:'Below Market',culture:'All',verified:true,desc:'Cinematic wedding films in 4K. Same-day edit reels available. Drone footage included. Arabic & English storytelling.'},
+  {id:8,name:'Al Noor Palace Hall',cat:'Wedding Halls',icon:'🏰',bg:'rgba(201,149,42,.08)',price:'8,000–20,000',rating:'4.6',reviews:198,match:82,loc:'Sharjah',tags:['350 pax','Arabic Style','In-house Food'],bench:'Best Value',culture:'Arab',verified:true,desc:'Traditional Arabic luxury hall with hand-painted ceilings and intricate Islamic geometry. Perfect for Arab weddings.'},
+  {id:9,name:'Sparkle Events Dubai',cat:'Event Planners',icon:'📋',bg:'rgba(109,40,217,.08)',price:'8,000–25,000',rating:'4.9',reviews:67,match:80,loc:'Downtown Dubai',tags:['Full Planning','Day-Of','Pakistani Expert'],bench:'Fair Price',culture:'All',verified:false,desc:'Full wedding coordination from venue selection to day-of management. Team of 8 coordinators. Specialized in multicultural weddings.'},
+  {id:10,name:'Dubai DJ Collective',cat:'DJ & Music',icon:'🎵',bg:'rgba(255,107,107,.08)',price:'3,000–8,000',rating:'4.6',reviews:112,match:75,loc:'Dubai',tags:['Bollywood','Arabic','Western','Live Band'],bench:'Market Rate',culture:'All',verified:true,desc:'Premier DJ services for weddings. Bollywood, Arabic, Western, and custom mashups. Live dhol player available.'},
+  {id:11,name:'Rose Gold Makeup Studio',cat:'Makeup Artists',icon:'💋',bg:'rgba(240,98,68,.08)',price:'1,800–4,500',rating:'4.5',reviews:156,match:73,loc:'JBR',tags:['Arab Bridal','Smokey Eye','Trial Included'],bench:'Below Market',culture:'Arab',verified:false,desc:'Specialist in Arabic bridal makeup with dramatic eyes and flawless skin. Trial session included with all bookings.'},
+  {id:12,name:'Garden of Flowers Decor',cat:'Decoration',icon:'🌺',bg:'rgba(0,168,150,.08)',price:'4,000–12,000',rating:'4.4',reviews:89,match:71,loc:'Jumeirah',tags:['Outdoor','Garden','Bohemian'],bench:'Good Value',culture:'Western',verified:false,desc:'Specialists in outdoor garden and bohemian wedding decor. Macramé arches, wildflower arrangements, and rustic elements.'},
+];
+let activeCategory = '';
+function filterByCategory(cat) { activeCategory=cat; renderVendors(); }
+function filterCatPill(btn, cat) {
+  document.querySelectorAll('.cat-pill').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  activeCategory = cat;
+  renderVendors();
+}
+function filterVendors() { renderVendors(); }
+function renderVendors() {
+  const search = (document.getElementById('vendorSearch')?.value||'').toLowerCase();
+  const cat = document.getElementById('catFilter')?.value||'';
+  const loc = document.getElementById('locationFilter')?.value||'';
+  let filtered = vendors.filter(v=>{
+    if(search && !v.name.toLowerCase().includes(search) && !v.cat.toLowerCase().includes(search) && !v.loc.toLowerCase().includes(search) && !v.tags.join(' ').toLowerCase().includes(search)) return false;
+    if(cat && !v.cat.toLowerCase().includes(cat.toLowerCase())) return false;
+    if(loc && !v.loc.toLowerCase().includes(loc.toLowerCase())) return false;
+    if(activeCategory && !v.cat.toLowerCase().includes(activeCategory.toLowerCase()) && !v.tags.join(' ').toLowerCase().includes(activeCategory.toLowerCase()) && !v.name.toLowerCase().includes(activeCategory.toLowerCase())) return false;
+    return true;
+  });
+  const grid = document.getElementById('vendorGrid');
+  if(!grid) return;
+  grid.innerHTML = filtered.map(v=>`
+    <div class="v-card" onclick="openVendorModal(${v.id})">
+      <div class="v-img" style="background:${v.bg}">
+        <div style="font-size:3.5rem;">${v.icon}</div>
+        <div class="v-match-badge">${v.match}% Match</div>
+        ${v.verified?'<div class="v-verified">✓ Verified</div>':''}
+      </div>
+      <div class="v-body">
+        <div class="v-cat">${v.cat}</div>
+        <div class="v-name">${v.name}</div>
+        <div class="v-meta"><div class="v-price">${v.price} AED</div><div class="v-rating">⭐ ${v.rating} (${v.reviews})</div></div>
+        <div class="price-bench">📊 AI: ${v.bench}</div>
+        <div class="v-tags">${v.tags.map(t=>`<span class="v-tag">${t}</span>`).join('')}</div>
+        <button class="v-book-btn" onclick="event.stopPropagation();openBooking()">📅 Check Availability & Book</button>
+      </div>
+    </div>`).join('');
+  if(!filtered.length) grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--light);">No vendors found for this filter. Try clearing filters or use AI Match.</div>';
+}
+function openVendorModal(id) {
+  const v = vendors.find(x=>x.id===id);
+  if(!v) return;
+  document.getElementById('vendorModalContent').innerHTML = `
+    <div style="background:${v.bg};height:160px;border-radius:var(--r-lg);display:flex;align-items:center;justify-content:center;font-size:5rem;margin-bottom:20px;">${v.icon}</div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;flex-wrap:wrap;gap:8px;">
+      <div>
+        <div style="font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--rose);">${v.cat}</div>
+        <h2 class="serif" style="font-size:1.6rem;font-weight:900;">${v.name}</h2>
+      </div>
+      <div style="text-align:right;"><div class="badge badge-rose">${v.match}% AI Match</div>${v.verified?'<div class="badge badge-teal mt-8">✓ Verified</div>':''}</div>
+    </div>
+    <div style="display:flex;gap:20px;margin-bottom:16px;flex-wrap:wrap;font-size:.87rem;">
+      <span>⭐ ${v.rating}/5 (${v.reviews} reviews)</span>
+      <span>📍 ${v.loc}</span>
+      <span>💰 ${v.price} AED</span>
+    </div>
+    <p style="color:var(--mid);font-size:.87rem;line-height:1.8;margin-bottom:16px;">${v.desc}</p>
+    <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">${v.tags.map(t=>`<span class="badge badge-gold">${t}</span>`).join('')}</div>
+    <div class="ai-tip-box mb-16">📊 <strong>AI Price Benchmark:</strong> ${v.bench}. Market range for ${v.cat} in Dubai: similar quality vendors average <strong>${v.price} AED</strong>.</div>
+    <div style="display:flex;gap:10px;">
+      <button class="btn btn-primary" style="flex:2;" onclick="closeModal('vendorModal');openBooking()">📅 Book This Vendor</button>
+      <button class="btn btn-secondary" style="flex:1;" onclick="showToast('Added to shortlist! ❤️','success');closeModal('vendorModal')">❤️ Shortlist</button>
+    </div>`;
+  document.getElementById('vendorModal').classList.add('open');
+}
+
+// ═══════════════════════════════════════
+// MODALS
+// ═══════════════════════════════════════
+function openBooking() { document.getElementById('bookingModal').classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+document.querySelectorAll('.modal-overlay').forEach(m=>m.addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');}));
+function confirmBooking() {
+  const names = document.getElementById('bookingNames')?.value;
+  const date = document.getElementById('bookingDate')?.value;
+  if(!names) { showToast('Please enter names first!','warning'); return; }
+  closeModal('bookingModal');
+  showToast('🎉 Booking initiated! Contract being generated... Check your dashboard.','success');
+  setTimeout(()=>showToast('📋 AI Contract ready! Check your email.','success'), 2000);
+  setTimeout(()=>showToast('💳 Secure payment link sent to your WhatsApp!','success'), 4000);
+}
+function selectPay(btn) { document.querySelectorAll('.pay-method').forEach(p=>p.classList.remove('sel')); btn.classList.add('sel'); }
+
+// ═══════════════════════════════════════
+// DASHBOARD TABS
+// ═══════════════════════════════════════
+function switchDashTab(btn, tabId) {
+  document.querySelectorAll('.dash-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  ['overview','checklist','guests','seating','payments','analytics'].forEach(t=>{
+    const el = document.getElementById('dtab-'+t);
+    if(el) el.style.display = t===tabId?'block':'none';
+  });
+}
+function switchVendorTab(btn, tabId) {
+  document.querySelectorAll('.dash-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  ['v-overview','v-verify','v-portfolio','v-analytics','v-pricing'].forEach(t=>{
+    const el = document.getElementById('vtab-'+t);
+    if(el) el.style.display = t===tabId?'block':'none';
+  });
+}
+
+// ═══════════════════════════════════════
+// CHECKLIST
+// ═══════════════════════════════════════
+const checklistData = [
+  {task:'Book wedding hall / venue',done:true,priority:'high'},
+  {task:'Confirm catering service',done:true,priority:'high'},
+  {task:'Book photographer & videographer',done:true,priority:'high'},
+  {task:'Choose & book makeup artist',done:false,priority:'high'},
+  {task:'Select decoration package',done:false,priority:'high'},
+  {task:'Order wedding dress / outfit',done:false,priority:'high'},
+  {task:'Send digital invitations',done:false,priority:'med'},
+  {task:'Finalize guest list & seating',done:false,priority:'med'},
+  {task:'Book DJ / entertainment',done:false,priority:'med'},
+  {task:'Arrange honeymoon travel',done:false,priority:'med'},
+  {task:'Order wedding cake',done:false,priority:'low'},
+  {task:'Get marriage license (UAE)',done:true,priority:'high'},
+  {task:'Bridal henna / mehendi night',done:false,priority:'low'},
+  {task:'Create wedding website',done:false,priority:'low'},
+];
+function renderChecklist() {
+  const wrap = document.getElementById('checklistWrap');
+  if(!wrap) return;
+  wrap.innerHTML = checklistData.map((item,i)=>`
+    <div class="check-item ${item.done?'done':''}" id="ci-${i}">
+      <div class="check-box ${item.done?'checked':''}" onclick="toggleCheck(${i})">
+        ${item.done?'✓':''}
+      </div>
+      <span style="flex:1;">${item.task}</span>
+      <span class="check-priority p-${item.priority}">${item.priority.toUpperCase()}</span>
+    </div>`).join('');
+}
+function toggleCheck(i) {
+  checklistData[i].done = !checklistData[i].done;
+  renderChecklist();
+  showToast(checklistData[i].done ? '✅ Task completed!' : 'Task marked incomplete','success');
+}
+function addCheckItem() {
+  const task = prompt('Enter new task:');
+  if(task) { checklistData.push({task,done:false,priority:'med'}); renderChecklist(); showToast('✅ Task added!','success'); }
+}
+
+// ═══════════════════════════════════════
+// GUEST MANAGER
+// ═══════════════════════════════════════
+const guestData = [
+  {name:'Ahmed Al-Rashidi (Father)',relation:'Family',rsvp:'confirmed',table:1,dietary:'None'},
+  {name:'Fatima Khan (Bride\'s Mother)',relation:'Family',rsvp:'confirmed',table:1,dietary:'Vegetarian'},
+  {name:'Omar Qureshi (Best Man)',relation:'Friends',rsvp:'confirmed',table:2,dietary:'None'},
+  {name:'Layla Sheikh',relation:'Friends',rsvp:'pending',table:'-',dietary:'None'},
+  {name:'Dr. Rahul Sharma',relation:'Colleagues',rsvp:'confirmed',table:3,dietary:'Vegan'},
+  {name:'Aisha Mahmood',relation:'Family',rsvp:'declined',table:'-',dietary:'Halal Only'},
+  {name:'Khalid Al-Mansoori',relation:'Family',rsvp:'confirmed',table:4,dietary:'None'},
+  {name:'Sara Williams',relation:'Friends',rsvp:'pending',table:'-',dietary:'Gluten-Free'},
+];
+function renderGuests() {
+  const tbody = document.getElementById('guestTableBody');
+  if(!tbody) return;
+  tbody.innerHTML = guestData.map(g=>`
+    <tr>
+      <td style="font-weight:600;">${g.name}</td>
+      <td>${g.relation}</td>
+      <td><span class="guest-status gs-${g.rsvp}">${g.rsvp.charAt(0).toUpperCase()+g.rsvp.slice(1)}</span></td>
+      <td>Table ${g.table}</td>
+      <td>${g.dietary}</td>
+      <td><button class="btn btn-ghost btn-sm" onclick="showToast('Reminder sent! 📧','success')">Remind</button></td>
+    </tr>`).join('');
+}
+
+// ═══════════════════════════════════════
+// SEATING CHART
+// ═══════════════════════════════════════
+function renderSeating() {
+  const container = document.getElementById('seatingTables');
+  if(!container) return;
+  const tables = [
+    {num:1,seats:8,guests:8,label:'Bride Family'},
+    {num:2,seats:8,guests:7,label:'Groom Family'},
+    {num:3,seats:10,guests:10,label:'VIP Guests'},
+    {num:4,seats:8,guests:6,label:'Colleagues'},
+    {num:5,seats:8,guests:5,label:'Friends'},
+    {num:6,seats:10,guests:9,label:'Extended Family'},
+    {num:7,seats:8,guests:4,label:'Childhood Friends'},
+    {num:8,seats:8,guests:0,label:'Available'},
+  ];
+  container.innerHTML = tables.map(t=>`
+    <div class="table-circle ${t.guests>=t.seats?'full':t.guests===0?'empty':''}" onclick="showToast('Table ${t.num}: ${t.label} (${t.guests}/${t.seats} seats) 👥','success')">
+      <div class="table-num">${t.num}</div>
+      <div class="table-seats">${t.guests}/${t.seats}</div>
+      <div class="table-emoji">${t.guests===0?'○':t.guests>=t.seats?'🟢':'⭕'}</div>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════
+// COUNTDOWN TIMER
+// ═══════════════════════════════════════
+function startCountdown() {
+  const wedding = new Date('2026-03-15T19:00:00');
+  function update() {
+    const now = new Date();
+    const diff = wedding - now;
+    if(diff <= 0) return;
+    const d = Math.floor(diff/(1000*60*60*24));
+    const h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    const m = Math.floor((diff%(1000*60*60))/(1000*60));
+    const s = Math.floor((diff%(1000*60))/1000);
+    ['cd-d','wcd-days'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=d;});
+    const cdh=document.getElementById('cd-h');if(cdh)cdh.textContent=h;
+    const cdm=document.getElementById('cd-m');if(cdm)cdm.textContent=m;
+    const cds=document.getElementById('cd-s');if(cds)cds.textContent=s;
+  }
+  update();
+  setInterval(update, 1000);
+}
+
+// ═══════════════════════════════════════
+// MOODBOARD
+// ═══════════════════════════════════════
+const themeMap = {
+  'Romantic Rose': {tags:['Floral Arches','Candlelight Centerpieces','Blush & Gold Palette','Soft Draping','Garden Reception'], classes:'badge-rose,badge-gold,badge-teal,badge-purple,badge-rose'},
+  'Royal Gold': {tags:['Crystal Chandeliers','Gold Chiavari Chairs','Ivory & Gold','Palace Style','Formal Seating'], classes:'badge-gold,badge-gold,badge-rose,badge-purple,badge-gold'},
+  'Coastal Blue': {tags:['Sea View Venue','White & Teal','Nautical Accents','Sunset Ceremony','Seafood Menu'], classes:'badge-teal,badge-teal,badge-sky,badge-rose,badge-green'},
+  'Mystical Lavender': {tags:['Purple Florals','Fairy Lights','Bohemian Arches','Dreamy Draping','Organic Tables'], classes:'badge-purple,badge-gold,badge-rose,badge-purple,badge-teal'},
+  'Garden Greenery': {tags:['Botanical Centerpieces','White Florals','Outdoor Garden','Rustic Wood','Farm to Table'], classes:'badge-green,badge-teal,badge-green,badge-gold,badge-teal'},
+  'Modern Minimalist': {tags:['Clean Lines','Monochrome Palette','Statement Florals','Ghost Chairs','Candle Forest'], classes:'badge-rose,badge-teal,badge-gold,badge-purple,badge-green'},
+  'Midnight Glamour': {tags:['Dark Florals','Crystal Elements','Black & Gold','Champagne Tower','LED Dance Floor'], classes:'badge-purple,badge-gold,badge-rose,badge-gold,badge-teal'},
+  'Desert Sunset': {tags:['Terracotta & Gold','Pampas Grass','Boho Lanterns','Sand Ceremony','Arabian Nights'], classes:'badge-amber,badge-gold,badge-rose,badge-teal,badge-purple'},
+};
+let selectedMoods = ['Romantic Rose'];
+function toggleMood(el, name) {
+  const tr = document.getElementById('themeResult');
+  const theme = themeMap[name] || themeMap['Romantic Rose'];
+  tr.innerHTML = `<h4>🎯 Your Wedding Theme: <span class="grad-text">${name}</span></h4>
+    <p class="text-light mb-12" style="font-size:.83rem;">Laila AI recommends these elements for your ${name} wedding:</p>
+    <div class="theme-tags">${theme.tags.map((t,i)=>`<span class="badge ${theme.classes.split(',')[i]||'badge-rose'}">${t}</span>`).join('')}</div>
+    <div class="mt-16"><button class="btn btn-primary btn-sm" onclick="showPage('vendors')">🤖 See Vendors for ${name} Theme</button></div>`;
+  document.querySelectorAll('.mood-swatch').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  showToast(`Theme updated to ${name}! Vendors being matched... 🎨`,'success');
+}
+
+// ═══════════════════════════════════════
+// DIGITAL INVITES
+// ═══════════════════════════════════════
+function selectTemplate(el, name) {
+  document.querySelectorAll('.template-card').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  const preview = document.getElementById('invitePreview');
+  const configs = {
+    'Romantic Bloom': {emoji:'🌸🌷🌸',bg:'linear-gradient(135deg,#FFF0F5,#FFF8EC,#F5F0FF)',nameStyle:'color:#D94F7A;'},
+    'Royal Gold': {emoji:'👑💛👑',bg:'linear-gradient(135deg,#FFF8DC,#FFFDE7)',nameStyle:'color:#B8860B;'},
+    'Desert Dreams': {emoji:'🏜️🌅🏜️',bg:'linear-gradient(135deg,#FFF3E0,#FBE9E7)',nameStyle:'color:#BF360C;'},
+    'Modern Luxe': {emoji:'💎⬛💎',bg:'linear-gradient(135deg,#F3F4F6,#E5E7EB)',nameStyle:'color:#111827;'},
+  };
+  const cfg = configs[name] || configs['Romantic Bloom'];
+  preview.style.background = cfg.bg;
+  preview.querySelector('.invite-floral').textContent = cfg.emoji;
+  preview.querySelector('.invite-names').style.cssText += cfg.nameStyle;
+  showToast(`Template "${name}" applied! 💌`,'success');
+}
+
+// ═══════════════════════════════════════
+// NOTIFICATIONS
+// ═══════════════════════════════════════
+function toggleNotifs() {
+  const panel = document.getElementById('notifPanel');
+  panel.style.display = panel.style.display==='none'?'block':'none';
+}
+function markAllRead() {
+  document.querySelectorAll('.notif-item').forEach(n=>n.classList.remove('unread'));
+  document.querySelectorAll('.notif-dot').forEach(d=>d.classList.add('read'));
+  showToast('All notifications marked as read ✓','success');
+}
+document.addEventListener('click',function(e){
+  if(!e.target.closest('.nav-right')) {
+    const panel = document.getElementById('notifPanel');
+    if(panel) panel.style.display='none';
+  }
+});
+
+// ═══════════════════════════════════════
+// SCROLL ANIMATION (IntersectionObserver)
+// ═══════════════════════════════════════
+document.addEventListener('DOMContentLoaded',()=>{
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){
+        e.target.style.opacity='1';
+        e.target.style.transform='translateY(0)';
+        obs.unobserve(e.target);
+      }
+    });
+  },{threshold:.08});
+  document.querySelectorAll('.v-card,.ai-feat-card,.cat-card,.pay-step,.review-card,.tech-card,.deploy-step,.analytics-card,.stat-card').forEach(el=>{
+    el.style.opacity='0';
+    el.style.transform='translateY(22px)';
+    el.style.transition='opacity .5s ease,transform .5s ease';
+    obs.observe(el);
+  });
+});
+
+// Initialize page
+showPage('home');
+</script>
+</body>
+</html>
